@@ -26,14 +26,19 @@ abstract class DAO {
                 Class.forName("com.mysql.jdbc.Driver");
                 String url = "jdbc:mysql://localhost:3306/test?autoReconnect=true&useSSL=false";
                 String username = "root";
-                String password = "Luongngocyen15012003@";
+                String password = "nvhanh263";
                 con = DriverManager.getConnection(url,username,password);
+//                System.out.println("sucessfully");
             }
             catch(Exception e){
-                System.out.println("FAIL");
+//                System.out.println("FAIL");
             }
         }
     }
+    
+//    public static void main(String[] args) {
+//        DAO d = new DAO();
+//    }
     public abstract Object getById(int Record_id);
     public abstract void addObject(Object object);
     public abstract void updateObject(Object object);
