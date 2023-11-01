@@ -18,13 +18,13 @@ import java.util.List;
  *
  * @author admin
  */
-abstract class DAO {
+public abstract class DAO {
     protected static Connection con ;
     public DAO (){
         if(con == null){
             try{
-                Class.forName("com.mysql.jdbc.Driver");
-                String url = "jdbc:mysql://localhost:3306/test?autoReconnect=true&useSSL=false";
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                String url = "jdbc:mysql://localhost:3306/team12?autoReconnect=true&useSSL=false";
                 String username = "root";
                 String password = "nvhanh263";
                 con = DriverManager.getConnection(url,username,password);

@@ -35,6 +35,67 @@ public class Article {
         this.stt = stt;
         this.user = user;
     }
+
+    public int getArticle_id() {
+        return article_id;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public int getDislikes() {
+        return dislikes;
+    }
+
+    public int getReports() {
+        return reports;
+    }
+
+    public String getArticle_name() {
+        return article_name;
+    }
+
+    public String getArticle_category() {
+        return article_category;
+    }
+
+    public String getArticle_tag() {
+        return article_tag;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public Date getTime_submit() {
+        return time_submit;
+    }
+
+    public Date getTime_accept() {
+        return time_accept;
+    }
+
+    public boolean isStt() {
+        return stt;
+    }
+
+    public UserFake getUser() {
+        return user;
+    }
+
+    public void setArticle_name(String article_name) {
+        this.article_name = article_name;
+    }
+    
+    @Override
+    public String toString() {
+        return "Article{" + "article_id=" + article_id + ", likes=" + likes + ", dislikes=" + dislikes + ", reports=" + reports + ", article_name=" + article_name + ", article_category=" + article_category + ", article_tag=" + article_tag + ", content=" + content + ", image=" + image + ", time_submit=" + time_submit + ", time_accept=" + time_accept + ", stt=" + stt + ", user=" + user + '}';
+    }
     
     
 }
