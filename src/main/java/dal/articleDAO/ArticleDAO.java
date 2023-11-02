@@ -41,7 +41,7 @@ public class ArticleDAO extends DAO{
     }
 
     @Override
-    public void addObject(Object object) {
+    public boolean addObject(Object object) {
         try {
             Article art = (Article)object;
             String sql = "insert into articles(article_name, article_category, article_tag,"
@@ -62,13 +62,15 @@ public class ArticleDAO extends DAO{
             st.setBoolean(12, art.isStt());
             st.executeUpdate();
 //            System.out.println("scs");
+            return true;
         } catch (SQLException e) {        
 //            System.out.println(e);
+            return false;
         }
     }
 
     @Override
-    public void updateObject(Object object) {
+    public boolean updateObject(Object object) {
         try {
             Article art = (Article)object;
             String sql = "update articles set article_name = ?, article_category =?,"
@@ -87,20 +89,24 @@ public class ArticleDAO extends DAO{
             st.setBoolean(9, art.isStt());
             st.executeUpdate();
 //            System.out.println("scs");
+            return true;
         } catch (SQLException e) {
 //            System.out.println(e);
+            return false;
         }
     }
 
     @Override
-    public void deleteObject(int objectId) {
+    public boolean deleteObject(int objectId) {
         try {
             String sql = "delete from articles where article_id = " + objectId;
             PreparedStatement st = con.prepareStatement(sql);
             st.executeUpdate();
 //            System.out.println("scs");
+            return true;
         } catch (SQLException e) {
 //            System.out.println(e);
+            return false;
         }
     }
 

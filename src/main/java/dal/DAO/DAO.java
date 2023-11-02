@@ -40,8 +40,8 @@ public abstract class DAO {
 //        DAO d = new DAO();
 //    }
     public abstract Object getById(int Record_id);
-    public abstract void addObject(Object object);
-    public abstract void updateObject(Object object);
-    public abstract void deleteObject(int objectId);
+    public abstract boolean addObject(Object object);
+    public abstract boolean updateObject(Object object);
+    public abstract boolean deleteObject(int objectId);
     public abstract List<Object> getAllObjects();
 }
