@@ -20,5 +20,30 @@ public class ReactionArticle {
         this.user = user;
         this.article = article;
     }
+
+    public int getReaction_article_id() {
+        return reaction_article_id;
+    }
+
+    public boolean isReation_type() {
+        return reation_type;
+    }
+
+    public UserFake getUser() {
+        return user;
+    }
+
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setReation_type(boolean reation_type) {
+        this.reation_type = reation_type;
+    }
+
+    @Override
+    public String toString() {
+        return "ReactionArticle{" + "reaction_article_id=" + reaction_article_id + ", reation_type=" + reation_type + ", user=" + user + ", article=" + article + '}';
+    }
     
 }

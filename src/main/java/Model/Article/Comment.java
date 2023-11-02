@@ -27,6 +27,43 @@ public class Comment {
         this.article = article;
         this.user = user;
     }
+
+    public int getComment_id() {
+        return comment_id;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public int getDislikes() {
+        return dislikes;
+    }
+
+    public String getComment_content() {
+        return comment_content;
+    }
+
+    public Date getComment_time() {
+        return comment_time;
+    }
+
+    public Article getArticle() {
+        return article;
+    }
+
+    public UserFake getUser() {
+        return user;
+    }
+    
+    public void setComment_content(String s) {
+        this.comment_content = s;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" + "comment_id=" + comment_id + ", likes=" + likes + ", dislikes=" + dislikes + ", comment_content=" + comment_content + ", comment_time=" + comment_time + ", article=" + article + ", user=" + user + '}';
+    }
     
     
 }
