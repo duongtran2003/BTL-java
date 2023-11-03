@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author pc
  */
-@WebServlet(name = "index", urlPatterns = {"/index"})
+@WebServlet(name = "index", urlPatterns = {"/product/index"})
 public class index extends HttpServlet {
 
 	/**
