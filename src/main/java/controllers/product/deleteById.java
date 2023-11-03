@@ -22,8 +22,8 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author pc
  */
-@WebServlet(name = "getById", urlPatterns = {"/product/getById/*"})
-public class getById extends HttpServlet {
+@WebServlet(name = "deleteById", urlPatterns = {"/product/deleteById/*"})
+public class deleteById extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,6 +34,7 @@ public class getById extends HttpServlet {
 	 * @throws ServletException if a servlet-specific error occurs
 	 * @throws IOException if an I/O error occurs
 	 */
+
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 	/**
 	 * Handles the HTTP <code>GET</code> method.
@@ -50,10 +51,14 @@ public class getById extends HttpServlet {
 		try {
 			int _id = Integer.parseInt(id);
 			ProductDAO prodDao = new ProductDAO();
-			Product prod = (Product) prodDao.getById(_id);
-			response.setStatus(200);
-			response.getWriter().write(new Gson().toJson(prod));
-		}
+			boolean success = prodDao.deleteObject(_id);
+			if (success) {
+				response.setStatus(200);
+			}
+			else {
+				response.setStatus(500);
+			}
+		} 
 		catch (NumberFormatException e) {
 			response.setStatus(400);
 		}
