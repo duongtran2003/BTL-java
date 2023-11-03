@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDAO extends DAO {
+	
+	public ProductDAO() {
+		super();
+	}
+
 	@Override
 	public Object getById(int id) {
 		String sql = "select * from products where product_id = " + id;	

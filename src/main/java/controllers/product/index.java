@@ -4,6 +4,11 @@
  */
 package controllers.product;
 
+import Model.Product.Product;
+import dal.ProductDAO.ProductDAO;
+import java.util.List;
+import java.util.ArrayList;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -40,7 +45,10 @@ public class index extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
+		ProductDAO prodDao = new ProductDAO();
+		List<Product> prods = prodDao.queryObjects();	
+		String json = new Gson().toJson(prods);
+		response.getWriter().write(json);
 	}
 
 	/**
