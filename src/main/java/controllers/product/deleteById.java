@@ -5,12 +5,8 @@
 package controllers.product;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
 
-import com.google.gson.Gson;
 
-import Model.Product.Product;
 import dal.ProductDAO.ProductDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -61,6 +57,7 @@ public class deleteById extends HttpServlet {
 		} 
 		catch (NumberFormatException e) {
 			response.setStatus(400);
+			
 		}
 	}
 
