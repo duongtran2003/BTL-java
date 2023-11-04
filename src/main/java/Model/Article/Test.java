@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import org.json.JSONObject;
 
 /**
  *
@@ -32,7 +33,26 @@ public class Test {
 //        a.setArticle_name("Ronaldo > Messi");
 //        ad.updateObject(a);
 
-        ArrayList<Article> arr = ad.getListArticleInQueue();
-        System.out.println(arr.size());
+//        ArrayList<Article> arr = ad.getListArticleInQueue();
+//        System.out.println(arr.size());
+
+        String jsonStr = "{\n" +
+                "    \"user_id\": 6,\n" +
+                "    \"article_id\": 7,\n" +
+                "    \"content\": \"bai viet that hay va bo ich\"\n" +
+                "}";
+
+        // Phân tích chuỗi JSON thành một đối tượng JSONObject
+        JSONObject jsonObject = new JSONObject(jsonStr);
+
+        // Lấy giá trị từ JSON bằng các khóa (keys)
+        int userId = jsonObject.getInt("user_id");
+        int articleId = jsonObject.getInt("article_id");
+        String content = jsonObject.getString("content");
+
+        // In ra các giá trị
+        System.out.println("User ID: " + userId);
+        System.out.println("Article ID: " + articleId);
+        System.out.println("Content: " + content);
     }
 }
