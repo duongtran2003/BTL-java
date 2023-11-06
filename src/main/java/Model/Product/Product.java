@@ -15,11 +15,12 @@ public class Product {
 	private String imagePath;
 	private String team;
 	private int price;
-	private int rating;
+	private float rating;
+	private int total_rating_time;
 	private int sold;
 	private int discounted;
 
-	public Product(int product_id, String product_name, boolean category, String imagePath, String team, int price, int rating, int sold, int discounted) {
+	public Product(int product_id, String product_name, boolean category, String imagePath, String team, int price, float rating, int sold, int discounted, int total_rating_time) {
 		this.product_id = product_id;
 		this.product_name = product_name;
 		this.category = category;
@@ -27,6 +28,7 @@ public class Product {
 		this.team = team;
 		this.price = price;
 		this.rating = rating;
+		this.total_rating_time = total_rating_time;
 		this.sold = sold;
 		this.discounted = discounted;
 	}
@@ -55,8 +57,12 @@ public class Product {
 		return price;
 	}
 
-	public int getRating() {
+	public float getRating() {
 		return rating;
+	}
+
+	public int getTotalRatingTime() {
+		return total_rating_time;
 	}
 
 	public int getSold() {
