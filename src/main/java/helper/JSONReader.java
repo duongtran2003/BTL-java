@@ -19,13 +19,13 @@ public class JSONReader {
     }  
 
     public static String readJSON(HttpServletRequest request) throws IOException {
-		BufferedReader buffer = new BufferedReader(new InputStreamReader(request.getInputStream()));
-		String jsonFromRequest = "";
-		String tmp = buffer.readLine();
-		while (tmp != null) {
-			jsonFromRequest += tmp;
-			tmp = buffer.readLine();
-		}
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(request.getInputStream()));
+        String jsonFromRequest = "";
+        String tmp = buffer.readLine();
+        while (tmp != null) {
+            jsonFromRequest += tmp;
+            tmp = buffer.readLine();
+        }
         return jsonFromRequest;
     }
 }
