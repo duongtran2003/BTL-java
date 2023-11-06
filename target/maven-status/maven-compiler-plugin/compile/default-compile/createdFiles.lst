@@ -1,6 +1,5 @@
 controllers\article\CommentServlet.class
 Model\Article\ReactionArticle.class
-controllers\product\index.class
 Model\Article\Comment.class
 dal\articleDAO\ReactionCommentDAO.class
 dal\ProductDAO\ProductDAO.class

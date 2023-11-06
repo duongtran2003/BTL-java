@@ -6,15 +6,15 @@ package controllers.product;
 
 import Model.Product.Product;
 import dal.ProductDAO.ProductDAO;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import helper.JSONReader;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -57,13 +57,7 @@ public class index extends HttpServlet {
 		//category: 0 - ao, 1 - giay
 
 		ProductDAO prodDao = new ProductDAO();
-		BufferedReader buffer = new BufferedReader(new InputStreamReader(request.getInputStream()));
-		String jsonFromRequest = "";
-		String tmp = buffer.readLine();
-		while (tmp != null) {
-			jsonFromRequest += tmp;
-			tmp = buffer.readLine();
-		}
+		String jsonFromRequest = JSONReader.readJSON(request);
 		Map<String, Object> filter = new JSONObject(jsonFromRequest).toMap();	
 		List<Product> prods = prodDao.queryObjects(filter);	
 		String json = new Gson().toJson(prods);

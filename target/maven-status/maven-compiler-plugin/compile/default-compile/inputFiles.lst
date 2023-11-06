@@ -25,6 +25,7 @@ D:\projects\java\BTL-JAVA\src\main\java\dal\voucherDAO\VoucherDAO.java
 D:\projects\java\BTL-JAVA\src\main\java\dal\articleDAO\CommentDAO.java
 D:\projects\java\BTL-JAVA\src\main\java\dal\DAO\DAO.java
 D:\projects\java\BTL-JAVA\src\main\java\Model\User\User.java
+D:\projects\java\BTL-JAVA\src\main\java\helper\JSONReader.java
 D:\projects\java\BTL-JAVA\src\main\java\dal\articleDAO\ReactionArticleDAO.java
 D:\projects\java\BTL-JAVA\src\main\java\dal\EmailDAO\EmailDAO.java
 D:\projects\java\BTL-JAVA\src\main\java\controllers\article\WriteArticleServlet.java
