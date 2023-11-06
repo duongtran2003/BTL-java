@@ -14,7 +14,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 import org.json.JSONObject;
 
-import helper.JSONReader;
+import helper.JSONHelper;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -57,11 +57,10 @@ public class index extends HttpServlet {
 		//category: 0 - ao, 1 - giay
 
 		ProductDAO prodDao = new ProductDAO();
-		String jsonFromRequest = JSONReader.readJSON(request);
+		String jsonFromRequest = JSONHelper.readJSON(request);
 		Map<String, Object> filter = new JSONObject(jsonFromRequest).toMap();	
 		List<Product> prods = prodDao.queryObjects(filter);	
-		String json = new Gson().toJson(prods);
-		response.getWriter().write(json);
+		JSONHelper.sendJsonAsResponse(response, 200, prods);
 	}
 
 	/**
