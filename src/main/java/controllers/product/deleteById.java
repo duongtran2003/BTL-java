@@ -5,9 +5,11 @@
 package controllers.product;
 
 import java.io.IOException;
-
+import java.util.HashMap;
+import java.util.Map;
 
 import dal.ProductDAO.ProductDAO;
+import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -44,20 +46,23 @@ public class deleteById extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String id = request.getPathInfo().substring(1);
+		Map<String, Object> res = new HashMap<String, Object> ();
 		try {
 			int _id = Integer.parseInt(id);
 			ProductDAO prodDao = new ProductDAO();
 			boolean success = prodDao.deleteObject(_id);
 			if (success) {
-				response.setStatus(200);
+				res.put("message", "success");	
+				JSONHelper.sendJsonAsResponse(response, 200, res);
 			}
 			else {
-				response.setStatus(500);
+				res.put("message", "server's error");	
+				JSONHelper.sendJsonAsResponse(response, 500, res);
 			}
 		} 
 		catch (NumberFormatException e) {
-			response.setStatus(400);
-			
+			res.put("message", "bad request, check url params again");	
+			JSONHelper.sendJsonAsResponse(response, 400, res);
 		}
 	}
 

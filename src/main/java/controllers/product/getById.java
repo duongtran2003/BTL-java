@@ -5,11 +5,14 @@
 package controllers.product;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.Gson;
 
 import Model.Product.Product;
 import dal.ProductDAO.ProductDAO;
+import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -45,15 +48,17 @@ public class getById extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String id = request.getPathInfo().substring(1);
+		Map<String, Object> res = new HashMap<String, Object> ();
 		try {
 			int _id = Integer.parseInt(id);
 			ProductDAO prodDao = new ProductDAO();
 			Product prod = (Product) prodDao.getById(_id);
-			response.setStatus(200);
-			response.getWriter().write(new Gson().toJson(prod));
+			JSONHelper.sendJsonAsResponse(response, 200, prod);
 		}
 		catch (NumberFormatException e) {
+			res.put("message", "bad request, check url params again");
 			response.setStatus(400);
+			JSONHelper.sendJsonAsResponse(response, 400, res);
 		}
 	}
 
