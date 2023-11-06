@@ -7,8 +7,15 @@ package controllers.product;
 import Model.Product.Product;
 import dal.ProductDAO.ProductDAO;
 import java.util.List;
+import java.util.Map;
+
 import com.google.gson.Gson;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -42,9 +49,23 @@ public class index extends HttpServlet {
 	 * @throws IOException if an I/O error occurs
 	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//filtered query
+
+		// filter: name, category, team, price, sold, discounted, rating, total_rating_time
+
+		//category: 0 - ao, 1 - giay
+
 		ProductDAO prodDao = new ProductDAO();
-		List<Product> prods = prodDao.queryObjects();	
+		BufferedReader buffer = new BufferedReader(new InputStreamReader(request.getInputStream()));
+		String jsonFromRequest = "";
+		String tmp = buffer.readLine();
+		while (tmp != null) {
+			jsonFromRequest += tmp;
+			tmp = buffer.readLine();
+		}
+		Map<String, Object> filter = new JSONObject(jsonFromRequest).toMap();	
+		List<Product> prods = prodDao.queryObjects(filter);	
 		String json = new Gson().toJson(prods);
 		response.getWriter().write(json);
 	}
@@ -57,11 +78,6 @@ public class index extends HttpServlet {
 	 * @throws ServletException if a servlet-specific error occurs
 	 * @throws IOException if an I/O error occurs
 	 */
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-	}
 
 	/**
 	 * Returns a short description of the servlet.
