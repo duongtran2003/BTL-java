@@ -1,8 +1,8 @@
-package dal.PhoneNumberDAO;
+package dal.userDAO;
 
 import dal.DAO.DAO;
-import Model.Email.Email;
-import Model.PhoneNumber.PhoneNumber;
+import Model.User.Email;
+import Model.User.PhoneNumber;
 import Model.User.User;
 import com.google.gson.Gson;
 import java.sql.DriverManager;

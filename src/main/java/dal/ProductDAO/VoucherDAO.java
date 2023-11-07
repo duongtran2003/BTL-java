@@ -1,5 +1,5 @@
-package dal.voucherDAO;
-import Model.Voucher.Voucher;
+package dal.ProductDAO;
+import Model.Product.Voucher;
 import dal.DAO.DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

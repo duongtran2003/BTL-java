@@ -1,5 +1,5 @@
-package dal.EmailDAO;
-import Model.Email.Email;
+package dal.userDAO;
+import Model.User.Email;
 import Model.User.User;
 import dal.DAO.DAO;
 

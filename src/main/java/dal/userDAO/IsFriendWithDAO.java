@@ -1,6 +1,6 @@
-package dal.IsFriendWithDAO;
-import Model.Email.Email;
-import Model.IsFriendWith.IsFriendWith;
+package dal.userDAO;
+import Model.User.Email;
+import Model.User.IsFriendWith;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

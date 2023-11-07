@@ -1,4 +1,4 @@
-package Model.Voucher;
+package Model.Product;
 
 import java.sql.Date;
 
