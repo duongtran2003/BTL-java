@@ -1,9 +1,8 @@
 package dal.UserDAO;
-import com.google.gson.Gson;
-
 import Model.User.User;
 import dal.DAO.DAO;
 
+import com.google.gson.Gson;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,14 +11,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.sql.Date;
 import java.sql.Types;
+import java.util.ArrayList;
 // các hàm khả dụng
 // addObject(Object object) : 1 người dùng đăng kí tài khooản
 // updateObject(Object object) : người dùng sửa thông tin cá nhân của họ
 // deleteObject(int objectId) : người dùng xóa tài khoản của họ đồng thời xóa hết các bản ghi tại các  bảng tham chiếu tới (làm trong servlet)
-// getAllObjects(int Record_id) : trả về object user , trả về null nếu không có user tương ứng
+// getAllObjects() : trả về object user , trả về null nếu không có user tương ứng
 public class UserDAO extends DAO {
     public UserDAO (){
-        super();
+        super(); 
     }
     public  Object getById(int Record_id) {
        String sql = "select * from users where user_id  = ?" ;
@@ -159,7 +159,47 @@ public class UserDAO extends DAO {
     }
     @Override
     public List<Object> getAllObjects() {
-        return null;
+        String sql = "select * from users";
+        try {
+            PreparedStatement stm = con.prepareStatement(sql);
+            ResultSet res = stm.executeQuery();
+            List<Object> list = new ArrayList<>();
+            while(res.next()){
+                int user_id_ = Integer.parseInt(res.getString(1)) ;
+                String user_name_ = res.getString(2)  ;
+                int pass_word_ = Integer.parseInt(res.getString(3)) ;
+                String full_name_ = res.getString(4) ;
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate date_of_birth_ = LocalDate.parse(res.getString(5), formatter);
+                boolean gender_ = false ;
+                if(res.getString(6).equals("1"))gender_ = true ;
+                String country_ = res.getString(7) ;
+                String city_ = res.getString(8) ;
+                String district_ = res.getString(9);
+                String detail_position_ = res.getString(10);
+                String avatar_image_path_ = res.getString(11);
+                String link_app_ = res.getString(12);
+                String link_social_ = res.getString(13);
+                String Favor_fc_ = res.getString(14) ;
+                String description_text_ = res.getString(15);
+                String uid_ = res.getString(16) ;
+                int user_role_ = Integer.parseInt(res.getString(17)) ;
+                int namechange_cooldown_ = Integer.parseInt(res.getString(18)) ;
+                boolean search_permission_ = false ;
+                if(res.getString(19).equals("1"))search_permission_ = true ;
+                int likes_ = Integer.parseInt(res.getString(20)) ;
+                int dislikes_ = Integer.parseInt(res.getString(21)) ;
+                int score_to_award_ = Integer.parseInt(res.getString(22));
+                int pass_word_latest_ = Integer.parseInt(res.getString(23)) ;
+                LocalDate pass_word_latest_time_ = LocalDate.parse(res.getString(24), formatter);;
+                int login_fail_ = Integer.parseInt(res.getString(25)) ;
+                int login_cooldown_ = Integer.parseInt(res.getString(26)) ;
+                list.add((Object)new User( user_id_,  user_name_,  pass_word_,  full_name_,  date_of_birth_,  gender_,  country_,  city_,  district_,  detail_position_,  avatar_image_path_,  link_app_,  link_social_,  Favor_fc_,  description_text_,  uid_,  user_role_,  namechange_cooldown_,  search_permission_,  likes_,  dislikes_,  score_to_award_,  pass_word_latest_,  pass_word_latest_time_,  login_fail_,  login_cooldown_));
+            }
+            if(list.size() == 0)return null;
+            return list;
+        } catch (Exception e) {
+            return null;
+        }
     }
-    
 }

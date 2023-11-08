@@ -67,7 +67,19 @@ public class EmailDAO extends DAO {
         }
     }
     public List<Object> getAllObjects(){
-        return null;
+        String sql = "select * from emails " ;
+        try {
+            PreparedStatement stm = con.prepareStatement(sql);
+            ResultSet res = stm.executeQuery();
+            List<Object> list = new ArrayList<>();
+            while(res.next()){
+                list.add((Object) new Email(res.getInt(1) , res.getInt(2) , res.getString(3)));
+            }
+            if(list.size() > 0)return list ;
+            return null ;
+        } catch (Exception e) {
+            return null;
+        }
     }
     public List<Object>getAllObjects(int Record_id){
         String sql = "select * from emails where user_id  = ? " ;

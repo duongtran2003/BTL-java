@@ -1,6 +1,8 @@
 package dal.UserDAO;
 import Model.User.Email;
 import Model.User.IsFriendWith;
+import dal.DAO.DAO;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,16 +10,13 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import dal.DAO.DAO;
-import dal.UserDAO.UserDAO;
-
 import java.util.Set;
 
 // các hàm khả dụng
 // addObject(int id_1 , int id_2) : 2 người dùng kết bạn với nhau
 // deleteObject(int id_1 , int id_2) : 2 người dùng hủy kết bạn với nhau
 // getAllObjects(int Record_id) : trả về 1 list các bạn bè của người dùng , trả về null nếu không có bạn bè nào
-public class IsFriendWithDAO extends DAO{
+public class IsFriendWithDAO extends DAO {
     public IsFriendWithDAO (){
         super();
     }
