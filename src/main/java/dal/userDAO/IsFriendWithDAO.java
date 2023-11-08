@@ -1,4 +1,4 @@
-package dal.userDAO;
+package dal.UserDAO;
 import Model.User.Email;
 import Model.User.IsFriendWith;
 import java.sql.DriverManager;

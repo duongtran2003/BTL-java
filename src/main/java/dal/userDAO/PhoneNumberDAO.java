@@ -1,4 +1,4 @@
-package dal.userDAO;
+package dal.UserDAO;
 
 import dal.DAO.DAO;
 import Model.User.Email;
