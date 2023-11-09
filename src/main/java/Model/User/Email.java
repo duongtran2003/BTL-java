@@ -34,4 +34,5 @@ public class Email {
     public String toString() {
         return "Email{" + "email_id=" + email_id + ", user_id=" + user_id + ", email=" + email + '}';
     }
+    
 }

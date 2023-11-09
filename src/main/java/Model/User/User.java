@@ -1,11 +1,13 @@
 package Model.User;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 public class User {
     private int user_id ;
     private String user_name ;
     private int pass_word ;
     private String full_name ;
-    private LocalDate date_of_birth ;
+    private String date_of_birth ;
     private boolean gender ;
     private String country ;
     private String city ;
@@ -18,17 +20,17 @@ public class User {
     private String description_text;
     private String uid ;
     private int user_role ;
-    private int namechange_cooldown ;
+    private long namechange_cooldown ;
     private boolean search_permission ;
     private int likes ;
     private int dislikes ;
     private int score_to_award ;
     private int pass_word_latest ;
-    private LocalDate pass_word_latest_time;
+    private long pass_word_latest_time;
     private int login_fail ;
-    private int login_cooldown ;
+    private long login_cooldown ;
 
-    public User(int user_id, String user_name, int pass_word, String full_name, LocalDate date_of_birth, boolean gender, String country, String city, String district, String detail_position, String avatar_image_path, String link_app, String link_social, String Favor_fc, String description_text, String uid, int user_role, int namechange_cooldown, boolean search_permission, int likes, int dislikes, int score_to_award, int pass_word_latest, LocalDate pass_word_latest_time, int login_fail, int login_cooldown) {
+    public User(int user_id, String user_name, int pass_word, String full_name, String date_of_birth, boolean gender, String country, String city, String district, String detail_position, String avatar_image_path, String link_app, String link_social, String Favor_fc, String description_text, String uid, int user_role, long namechange_cooldown, boolean search_permission, int likes, int dislikes, int score_to_award, int pass_word_latest, long pass_word_latest_time, int login_fail, long login_cooldown) {
         this.user_id = user_id;
         this.user_name = user_name;
         this.pass_word = pass_word;
@@ -56,6 +58,8 @@ public class User {
         this.login_fail = login_fail;
         this.login_cooldown = login_cooldown;
     }
+    
+    
 
     public int getUser_id() {
         return user_id;
@@ -73,7 +77,7 @@ public class User {
         return full_name;
     }
 
-    public LocalDate getDate_of_birth() {
+    public String getDate_of_birth() {
         return date_of_birth;
     }
 
@@ -125,7 +129,7 @@ public class User {
         return user_role;
     }
 
-    public int getNamechange_cooldown() {
+    public long getNamechange_cooldown() {
         return namechange_cooldown;
     }
 
@@ -149,7 +153,7 @@ public class User {
         return pass_word_latest;
     }
 
-    public LocalDate getPass_word_latest_time() {
+    public long getPass_word_latest_time() {
         return pass_word_latest_time;
     }
 
@@ -157,7 +161,7 @@ public class User {
         return login_fail;
     }
 
-    public int getLogin_cooldown() {
+    public long getLogin_cooldown() {
         return login_cooldown;
     }
     @Override
