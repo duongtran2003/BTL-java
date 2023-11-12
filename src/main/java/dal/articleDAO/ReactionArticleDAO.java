@@ -4,14 +4,15 @@
  */
 package dal.articleDAO;
 
-import Model.Article.Article;
 import Model.Article.ReactionArticle;
-import Model.Article.UserFake;
 import dal.DAO.DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -27,12 +28,28 @@ public class ReactionArticleDAO extends DAO{
             PreparedStatement st = con.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                UserFake user = new UserFake(1);
                 return new ReactionArticle(rs.getInt("reaction_article_id"), rs.getBoolean("reaction_type"), 
-                user, (Article)ad.getById(rs.getInt("article_id")));
+                rs.getInt("user_id"), rs.getInt("article_id"));
             }
         } catch (SQLException e) {
             System.out.println(e);
+        }
+        return null;
+    }
+    
+    public ReactionArticle getByArticleAndUser(int article_id, int user_id) {
+        try {
+            String sql = "select * from reaction_articles where user_id = ? and article_id = ?";
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, user_id);
+            st.setInt(2, article_id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return new ReactionArticle(rs.getInt("reaction_article_id"), 
+                        rs.getBoolean("reaction_type"), rs.getInt("user_id"), rs.getInt("user_id"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ReactionArticleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -44,9 +61,9 @@ public class ReactionArticleDAO extends DAO{
             String sql = "insert into reaction_articles(user_id, article_id, reaction_type) "
                     + "value(?, ?, ?)";
             PreparedStatement st = con.prepareStatement(sql);
-            st.setInt(1, react.getUser().getUser_id());
-            st.setInt(2, react.getArticle().getArticle_id());
-            st.setBoolean(3, react.isReation_type());
+            st.setInt(1, react.getUserId());
+            st.setInt(2, react.getArticleId());
+            st.setBoolean(3, react.isReationType());
             st.executeUpdate();
             System.out.println("scs");
             return true;
@@ -62,7 +79,7 @@ public class ReactionArticleDAO extends DAO{
             ReactionArticle react = (ReactionArticle)object;
             String sql = "update reaction_articles set reaction_type = ?";
             PreparedStatement st = con.prepareStatement(sql);
-            st.setBoolean(1, react.isReation_type());
+            st.setBoolean(1, react.isReationType());
             st.executeUpdate();
 //            System.out.println("scs");
             return true;
@@ -85,9 +102,37 @@ public class ReactionArticleDAO extends DAO{
         }
     }
 
+    public boolean deleteRAByCriteria(String criteria) { // xóa toàn bộ rA khi bài viết bị xóa
+        try {
+            String sql = "delete from reaction_articles where " + criteria;
+            PreparedStatement st = con.prepareStatement(sql);
+            st.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+
     @Override
     public List<Object> getAllObjects() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    public ArrayList<ReactionArticle> getListRA(String criteria) { // lấy list theo tiêu chí
+        try {
+            String sql = "select * from reaction_articles where " + criteria;
+            PreparedStatement st = con.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            ArrayList<ReactionArticle> list = new ArrayList<>();
+            while (rs.next()) {
+                list.add(new ReactionArticle(rs.getInt("reaction_article_id"), rs.getBoolean("reaction_type"), 
+                            rs.getInt("user_id"), rs.getInt("article_id")));
+            }
+            return list;
+        } catch (SQLException e) {
+        }
+        return null;
     }
     
 }

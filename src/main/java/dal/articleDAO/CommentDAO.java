@@ -4,9 +4,7 @@
  */
 package dal.articleDAO;
 
-import Model.Article.Article;
 import Model.Article.Comment;
-import Model.Article.UserFake;
 import dal.DAO.DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,11 +26,10 @@ public class CommentDAO extends DAO{
             PreparedStatement st = con.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                UserFake user = new UserFake(1);
                 return new Comment(rs.getInt("comment_id"), rs.getInt("likes"), 
                         rs.getInt("dislikes"), rs.getString("comment_content"), 
-                        rs.getDate("comment_time"), (Article)ad.getById(rs.getInt("article_id")),
-                        user);
+                        rs.getTimestamp("comment_time"), rs.getInt("article_id"),
+                        rs.getInt("user_id"));
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -47,10 +44,10 @@ public class CommentDAO extends DAO{
             String sql = "insert into comments(article_id, user_id, comment_content,"
                     + " comment_time, likes, dislikes) value(?, ?, ?, ?, ?, ?)";
             PreparedStatement st = con.prepareStatement(sql);
-            st.setInt(1, comment.getArticle().getArticle_id());
-            st.setInt(2, comment.getUser().getUser_id());
-            st.setString(3, comment.getComment_content());
-            st.setDate(4, comment.getComment_time());
+            st.setInt(1, comment.getArticleId());
+            st.setInt(2, comment.getUserId());
+            st.setString(3, comment.getCommentContent());
+            st.setTimestamp(4, comment.getCommentTime());
             st.setInt(5, comment.getLikes());
             st.setInt(6, comment.getDislikes());
             st.executeUpdate();
@@ -69,11 +66,11 @@ public class CommentDAO extends DAO{
             String sql = "update comments set comment_content = ?, comment_time = ?,"
                     + " likes = ?, dislikes = ? where comment_id = ?";
             PreparedStatement st = con.prepareStatement(sql);
-            st.setString(1, cmt.getComment_content());
-            st.setDate(2, cmt.getComment_time());
+            st.setString(1, cmt.getCommentContent());
+            st.setTimestamp(2, cmt.getCommentTime());
             st.setInt(3, cmt.getLikes());
             st.setInt(4, cmt.getDislikes());
-            st.setInt(5, cmt.getComment_id());
+            st.setInt(5, cmt.getCommentId());
             st.executeUpdate();
 //            System.out.println("scs");
             return true;
@@ -95,20 +92,45 @@ public class CommentDAO extends DAO{
             return false;
         }
     }
+    
+    public boolean deleteByArticleId(int articleId) { // xóa toàn bộ comment trong 1 bài viết
+        try {
+            String sql = "delete from comments where article_id = " + articleId;
+            PreparedStatement st = con.prepareStatement(sql);
+            st.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+    
+    public boolean deleteByUserId(int userId) { // xóa toàn bộ comment của 1 user
+        try {
+            String sql = "delete from comments where user_id = " + userId;
+            PreparedStatement st = con.prepareStatement(sql);
+            st.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
 
     @Override
     public List<Object> getAllObjects() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public ArrayList<Comment> getListComment (String criteria) {
         try {
-            String sql = "select * from comments";
+            String sql = "select * from comments where " + criteria;
             PreparedStatement st = con.prepareStatement(sql);
-            List<Object> list = new ArrayList<>();
+            ArrayList<Comment> list = new ArrayList<>();
             ResultSet rs = st.executeQuery();
-            UserFake user = new UserFake(1);
             while (rs.next()) {
                 list.add(new Comment(rs.getInt("comment_id"), rs.getInt("likes"), 
                         rs.getInt("dislikes"), rs.getString("comment_content"), 
-                        rs.getDate("comment_time"), (Article)ad.getById(rs.getInt("article_id")),
-                        user));
+                        rs.getTimestamp("comment_time"), rs.getInt("article_id"), 
+                        rs.getInt("user_id")));
             }
             return list;
         } catch (SQLException e) {
@@ -116,5 +138,4 @@ public class CommentDAO extends DAO{
         }
         return null;
     }
-    
 }
