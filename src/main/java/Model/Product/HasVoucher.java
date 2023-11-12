@@ -20,34 +20,17 @@ public class HasVoucher {
         return has_voucher_id;
     }
 
-    public void setHas_voucher_id(int has_voucher_id) {
-        this.has_voucher_id = has_voucher_id;
-    }
-
     public int getUser_id() {
         return user_id;
-    }
-
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
     }
 
     public int getVoucher_id() {
         return voucher_id;
     }
 
-    public void setVoucher_id(int voucher_id) {
-        this.voucher_id = voucher_id;
-    }
-
     public Date getExpiration_date() {
         return expiration_date;
     }
-
-    public void setExpiration_date(Date expiration_date) {
-        this.expiration_date = expiration_date;
-    }
-
     @Override
     public String toString() {
         return "HasVoucher{" + "has_voucher_id=" + has_voucher_id + ", user_id=" + user_id + ", voucher_id=" + voucher_id + ", expiration_date=" + expiration_date + '}';
