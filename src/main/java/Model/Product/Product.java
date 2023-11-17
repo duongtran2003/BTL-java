@@ -73,5 +73,41 @@ public class Product {
 		return discounted;
 	}
 
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
+	}
+
+	public void setCategory(boolean category) {
+		this.category = category;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public void setTeam(String team) {
+		this.team = team;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public void setRating(float rating) {
+		this.rating = rating;
+	}
+
+	public void setTotal_rating_time(int total_rating_time) {
+		this.total_rating_time = total_rating_time;
+	}
+
+	public void setSold(int sold) {
+		this.sold = sold;
+	}
+
+	public void setDiscounted(int discounted) {
+		this.discounted = discounted;
+	}
+
 
 }

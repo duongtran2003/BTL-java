@@ -43,7 +43,7 @@ public class deleteById extends HttpServlet {
 	 * @throws IOException if an I/O error occurs
 	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String id = request.getPathInfo().substring(1);
 		Map<String, Object> res = new HashMap<String, Object> ();
