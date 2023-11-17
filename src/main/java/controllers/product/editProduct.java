@@ -61,17 +61,17 @@ public class editProduct extends HttpServlet {
 		Map<String, Object> fields = new JSONObject(jsonFromRequest).toMap();
 		Map<String, String> res = new HashMap<> ();
 		if (fields.get("product_id") == null && fields.get("product_id").toString().trim().equals("")) {
-			res.put("message", "bad request");
+			res.put("message", "bad request, json ko chua id");
 			JSONHelper.sendJsonAsResponse(response, 400, res);
 			return;
 		}
 		ProductDAO prodDao = new ProductDAO();
 		try {
 			Product oldProd = (Product) prodDao.getById(Integer.parseInt(fields.get("product_id").toString()));
-			if (!fields.get("product_name").toString().equals("") && fields.get("product_name") != null) {
+			if (fields.get("product_name") != null && !fields.get("product_name").toString().equals("")) {
 				oldProd.setProduct_name(fields.get("product_name").toString());
 			}
-			if (!fields.get("category").toString().equals("") && fields.get("category") != null) {
+			if (fields.get("category") != null && !fields.get("category").toString().equals("")) {
 				if (fields.get("category").toString().equals("1")) {
 					oldProd.setCategory(true);
 				}
@@ -79,19 +79,19 @@ public class editProduct extends HttpServlet {
 					oldProd.setCategory(false);
 				}
 			}
-			if (!fields.get("imagePath").toString().equals("") && fields.get("imagePath") != null) {
+			if (fields.get("imagePath") != null && !fields.get("imagePath").toString().equals("")) {
 				oldProd.setImagePath(fields.get("imagePath").toString());
 			}
-			if (!fields.get("team").toString().equals("") && fields.get("team") != null) {
+			if (fields.get("team") != null && !fields.get("team").toString().equals("")) {
 				oldProd.setTeam(fields.get("team").toString());
 			}
-			if (!fields.get("price").toString().equals("") && fields.get("price") != null) {
+			if (fields.get("price") != null && !fields.get("price").toString().equals("")) {
 				int newPrice = Integer.parseInt(fields.get("price").toString());
 				if (newPrice >= 0) {
 					oldProd.setPrice(newPrice);
 				}
 			}
-			if (!fields.get("discounted").toString().equals("") && fields.get("discounted") != null) {
+			if (fields.get("discounted") != null && !fields.get("discounted").toString().equals("")) {
 				int newDiscounted = Integer.parseInt(fields.get("discounted").toString());
 				if (newDiscounted > 0 && newDiscounted <= 100) {
 					oldProd.setDiscounted(newDiscounted);
@@ -109,7 +109,7 @@ public class editProduct extends HttpServlet {
 			}
 		}
 		catch (Exception e) {
-			res.put("message", "bad request");
+			res.put("message", "bad request, sai kieu du lieu");
 			JSONHelper.sendJsonAsResponse(response, 400, res);
 			return;
 		}
