@@ -15,6 +15,7 @@ D:\projects\java\BTL-java\src\main\java\com\mycompany\btl\java\resources\Jakarta
 D:\projects\java\BTL-java\src\main\java\com\mycompany\btl\java\JakartaRestConfiguration.java
 D:\projects\java\BTL-java\src\main\java\Model\User\Email.java
 D:\projects\java\BTL-java\src\main\java\controllers\product\getById.java
+D:\projects\java\BTL-java\src\main\java\controllers\product\addProduct.java
 D:\projects\java\BTL-java\src\main\java\dal\articleDAO\ArticleDAO.java
 D:\projects\java\BTL-java\src\main\java\Model\User\PhoneNumber.java
 D:\projects\java\BTL-java\src\main\java\dal\ProductDAO\HasVoucherDAO.java

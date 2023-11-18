@@ -19,7 +19,7 @@ import org.json.JSONObject;
  * @author DELL
  */
 
-@WebServlet(name="VoucherServlet", urlPatterns={"product/voucher"})
+@WebServlet(name="VoucherServlet", urlPatterns={"/product/voucher"})
 public class OperateWithVoucher extends HttpServlet {
 
     private Gson gson=new Gson();

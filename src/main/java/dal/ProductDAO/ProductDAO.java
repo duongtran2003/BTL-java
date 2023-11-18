@@ -5,6 +5,7 @@ import dal.DAO.DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -41,12 +42,16 @@ public class ProductDAO extends DAO {
 	}
 	
 	@Override
-	public boolean addObject(Object newProd) {
+	public boolean addObject(Object object) {
+		return false;
+	}
+
+	public int addProduct(Object newProd) {
 		try {
 			Product p = (Product) newProd;
 			String sql = "insert into products(product_name, category, imagePath, team, price, rating, sold, discounted, total_rating_time)"
 						+ " value(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-			PreparedStatement st = con.prepareStatement(sql);
+			PreparedStatement st = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			st.setString(1, p.getProduct_name());
 			st.setBoolean(2, p.getCategory());
 			st.setString(3, p.getImagePath());
@@ -56,11 +61,17 @@ public class ProductDAO extends DAO {
 			st.setInt(7, p.getSold());
 			st.setInt(8, p.getDiscounted());
 			st.setInt(9, p.getTotalRatingTime());
-			st.executeUpdate();
-			return true;
+			int affected = st.executeUpdate();
+			ResultSet rs = st.getGeneratedKeys();
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+			else {
+				return -1;
+			}
 		}
 		catch (SQLException e) {
-			return false;
+			return -1;
 		}
 	}
 
