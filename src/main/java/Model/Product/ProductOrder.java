@@ -9,21 +9,26 @@ package Model.Product;
  * @author pc
  */
 public class ProductOrder {
-    private int product_id;
     private int order_id;
     private int quantity;
     private int product_order_id;
+    private String nametag;
+    private String color;
+    private int size;
+    private int squadNumber;
+    private Product product; 
 
-    public ProductOrder(int product_order_id, int product_id, int order_id, int quantity) {
-        this.product_id = product_id;
-        this.order_id = order_id;
-        this.quantity = quantity;
+    public ProductOrder(int product_order_id, Product prod, int order_id, String nametag, String color, int size, int squadnNumber, int quantity) {
+        //0 - S, 1 - M, 2 - L, 3 - XL, 4 - XXL
         this.product_order_id = product_order_id;
+        this.product = prod;
+        this.order_id = order_id;
+        this.nametag = nametag;
+        this.color = color;
+        this.size = size;
+        this.squadNumber = squadnNumber;
+        this.quantity = quantity;
     }
-
-	public int getProduct_id() {
-		return product_id;
-	}
 
 	public int getOrder_id() {
 		return order_id;
@@ -37,8 +42,24 @@ public class ProductOrder {
 		return product_order_id;
 	}
 
-	public void setProduct_id(int product_id) {
-		this.product_id = product_id;
+	public String getNametag() {
+		return nametag;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public int getSquadNumber() {
+		return squadNumber;
+	}
+
+	public Product getProduct() {
+		return product;
 	}
 
 	public void setOrder_id(int order_id) {
@@ -48,6 +69,27 @@ public class ProductOrder {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+
+	public void setNametag(String nametag) {
+		this.nametag = nametag;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public void setSquadNumber(int squadNumber) {
+		this.squadNumber = squadNumber;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
     
     
 }
