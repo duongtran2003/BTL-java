@@ -7,6 +7,7 @@ package controllers.product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import Model.Product.Order;
@@ -14,6 +15,7 @@ import dal.ProductDAO.OrderDAO;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,8 +32,20 @@ public class getOrderById extends HttpServlet {
 		String id = request.getPathInfo().substring(1);
 		Map<String, Object> res = new HashMap<String, Object> ();
 		try {
-			int _id = Integer.parseInt(id);
 			OrderDAO orderDao = new OrderDAO();
+			Cookie[] cookies = request.getCookies();
+			for (Cookie cookie: cookies) {
+				if (cookie.getName().equals("user_id")) {
+					int user_id = Integer.parseInt(cookie.getValue());
+					List<Order> orders = orderDao.getByUserId(user_id);
+					if (orders == null || orders.size() == 0) {
+						res.put("message", "ko phai order cua ban");
+						JSONHelper.sendJsonAsResponse(response, 403, res);
+					}
+					break;
+				}
+			}
+			int _id = Integer.parseInt(id);
 			Order order = (Order) orderDao.getById(_id);
 			JSONHelper.sendJsonAsResponse(response, 200, order);
 		}

@@ -36,7 +36,6 @@ com\mycompany\btl\java\JakartaRestConfiguration.class
 com\mycompany\btl\java\resources\JakartaEE10Resource.class
 controllers\article\CommentServlet$1.class
 dal\articleDAO\CommentDAO.class
-controllers\product\OperateWithOrder.class
 common\product\Constant.class
 controllers\product\deleteById.class
 dal\ProductDAO\OrderDAO.class

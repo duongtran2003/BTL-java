@@ -65,6 +65,26 @@ public class OrderDAO extends DAO{
         }
     }
 
+    public List<Order> getOrderAdmin() {
+        List<Order> res = new ArrayList<> ();
+        try {
+            List<Integer> orders = new ArrayList<> ();
+            String sql = "select * from orders";
+            PreparedStatement st = con.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                orders.add(rs.getInt("order_id"));
+            }
+            for (int orderId: orders) {
+                res.add((Order) this.getById(orderId));
+            }
+            return res;
+        }
+        catch (SQLException e) {
+            return null;
+        }
+    }
+
     @Override
     public boolean addObject(Object object) {
         // {
