@@ -20,12 +20,14 @@ public class Order {
     private Timestamp date;
     private List<ProductOrder> entries = new ArrayList<> ();
     private int status;
+    private int discounted;
 
-    public Order(int order_id, int user_id, List<ProductOrder> entries) {
+    public Order(int order_id, int user_id, List<ProductOrder> entries, int discounted) {
         this.order_id = order_id;
         this.user_id = user_id;
         this.entries = entries;
         this.status = 0; // 0 - pending, 1 - delivering, 2 - delivered
+        this.discounted = discounted;
     }
 
 	public int getOrder_id() {
@@ -44,6 +46,10 @@ public class Order {
 		return entries;
 	}
 
+    public int getDiscounted() {
+        return discounted;
+    }
+
 	public int getStatus() {
 		return status;
 	}
@@ -52,5 +58,12 @@ public class Order {
 		this.status = status;
 	}
 
+	public void setDate(Timestamp date) {
+		this.date = date;
+	}
+
+    public void setDiscounted(int discounted) {
+        this.discounted = discounted;
+    }
 
 }
