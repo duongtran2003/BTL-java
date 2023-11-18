@@ -70,7 +70,7 @@ public class addProduct extends HttpServlet {
 		}
 		else {
 			res.put("message", "bad request, trung ten");
-			JSONHelper.sendJsonAsResponse(response, 400, newId);
+			JSONHelper.sendJsonAsResponse(response, 400, res);
 		}
 	}
 
