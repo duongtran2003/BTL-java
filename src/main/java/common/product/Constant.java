@@ -9,14 +9,15 @@ package common.product;
  * @author DELL
  */
 public class Constant {
-    public static final String URL_VOUCHER_ADD= "/product/voucher/add";
-    public static final String URL_VOUCHER_DELETE= "/product/voucher/delete";
-    public static final String URL_VOUCHER_GET= "/product/voucher/get";
-    
-    public static final String URL_HAS_VOUCHER_ADD= "/product/hasvoucher/add";
-    public static final String URL_HAS_VOUCHER_DELETE= "/product/hasvoucher/delete";
-    public static final String URL_HAS_VOUCHER_GET= "/product/hasvoucher/get";
-    
+    //VOUCHER
+    public static final String URL_VOUCHER_POST_AND_GET= "/product/voucher";
+    public static final String URL_VOUCHER_DELETE_VOUCHER_BY_ID= "/product/voucher/delete/*";
+    public static final String URL_VOUCHER_EDIT= "/product/voucher/edit";
+    //HAS VOUCHER
+    public static final String URL_HAS_VOUCHER_POST_AND_GET= "/product/hasvoucher";
+    public static final String URL_HAS_VOUCHER_DELETE_BY_ID= "/product/hasvoucher/deletebyid/*";
+    public static final String URL_HAS_VOUCHER_DELETE_WHEN_EXPIRED= "/product/hasvoucher/deletewhenexpired";
+    public static final String URL_HAS_VOUCHER_EDIT="/product/hasvoucher/edit";
     
     public static final String URL_ORDER_ADD="/product/order/createOrder";
     public static final String URL_ORDER_DELETE="/product/order/cancelOrder";
