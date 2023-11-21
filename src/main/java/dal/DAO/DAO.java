@@ -24,9 +24,9 @@ public abstract class DAO {
         if(con == null){
             try{
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                String url = "jdbc:mysql://localhost:3306/team12?autoReconnect=true&useSSL=false";
+                String url = "jdbc:mysql://127.0.0.1:3307/btl?user=root&autoReconnect=true&useSSL=false";
                 String username = "root";
-                String password = "nvhanh263";
+                String password = "admin123";
                 con = DriverManager.getConnection(url,username,password);
 //                System.out.println("sucessfully");
             }

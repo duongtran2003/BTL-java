@@ -31,6 +31,10 @@ public class HasVoucher {
     public Date getExpiration_date() {
         return expiration_date;
     }
+
+    public void setExpiration_date(Date expiration_date) {
+        this.expiration_date = expiration_date;
+    }
     @Override
     public String toString() {
         return "HasVoucher{" + "has_voucher_id=" + has_voucher_id + ", user_id=" + user_id + ", voucher_id=" + voucher_id + ", expiration_date=" + expiration_date + '}';

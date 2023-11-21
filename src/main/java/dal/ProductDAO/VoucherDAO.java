@@ -48,7 +48,7 @@ public class VoucherDAO extends DAO{
     public boolean updateObject(Object newVoucher) {
         try {
                 Voucher v = (Voucher) newVoucher;
-                String sql = "update into vouchers(discount_amount=?, expire_time=? where voucher_id= "+ v.getVoucher_id();
+                String sql = "update vouchers set discount_amount=?, expire_time=? where voucher_id= "+ v.getVoucher_id();
                 PreparedStatement st = con.prepareStatement(sql);
                 st.setInt(1,v.getDiscount_amount());
                 st.setInt(2,v.getExpire_time());
@@ -84,7 +84,7 @@ public class VoucherDAO extends DAO{
             String sql = "select * from vouchers";
             PreparedStatement st = con.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
-            List<Voucher> o = new ArrayList<Voucher> ();
+            List<Voucher> o = new ArrayList<> ();
             while (rs.next()) {
                     o.add(new Voucher(rs.getInt("voucher_id"), 
                         rs.getInt("discount_amount"),

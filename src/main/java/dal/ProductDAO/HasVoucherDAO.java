@@ -56,7 +56,7 @@ public class HasVoucherDAO extends DAO{
     public boolean updateObject(Object newHasVoucher){
         try{
                 HasVoucher hasVoucher = (HasVoucher) newHasVoucher;
-                String sql = "update into has_vouchers(user_id=?, voucher_id=?, expiration_date=?  where has_voucher_id= "+ hasVoucher.getHas_voucher_id();
+                String sql = "update has_vouchers set user_id=?, voucher_id=?, expiration_date=?  where has_voucher_id= "+ hasVoucher.getHas_voucher_id();
                 PreparedStatement st = con.prepareStatement(sql);
                 st.setInt(1,hasVoucher.getUser_id());
                 st.setInt(2,hasVoucher.getVoucher_id());
@@ -92,6 +92,25 @@ public class HasVoucherDAO extends DAO{
             PreparedStatement st = con.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             List<HasVoucher> o = new ArrayList<HasVoucher> ();
+            while (rs.next()) {
+                    o.add(new HasVoucher(rs.getInt("has_voucher_id"), 
+                        rs.getInt("user_id"),
+                        rs.getInt("voucher_id"),
+                        rs.getDate("expiration_date")));
+                       
+            }
+            return o;
+        }
+        catch (SQLException e) {
+                return null;
+        }
+    }  
+     public List<HasVoucher> getListHasVouchersByUser(int user_id) {
+        try {
+            String sql = "select * from has_vouchers where user_id ="+ user_id;
+            PreparedStatement st = con.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            List<HasVoucher> o = new ArrayList<> ();
             while (rs.next()) {
                     o.add(new HasVoucher(rs.getInt("has_voucher_id"), 
                         rs.getInt("user_id"),
