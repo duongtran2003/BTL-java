@@ -7,13 +7,16 @@ package controllers.product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
 
 import Model.Product.Order;
+import Model.Product.ProductOrder;
 import Model.User.User;
 import dal.ProductDAO.OrderDAO;
+import dal.ProductDAO.ProductDAO;
 import dal.UserDAO.UserDAO;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
@@ -66,8 +69,18 @@ public class processOrder extends HttpServlet {
 			}
 			OrderDAO orderDAO = new OrderDAO();
 			Order order = (Order) orderDAO.getById(order_id);
+			
 			order.setStatus(status);
 			orderDAO.updateObject(order);
+			if (status == 2) {
+				List<ProductOrder> prods = order.getEntries();
+				ProductDAO prodDAO = new ProductDAO();
+				for (ProductOrder prod: prods) {
+					int prod_id = prod.getProduct().getProduct_id();
+					prodDAO.sellProduct(prod_id);
+				}
+			}
+
 		} 
 		catch (Exception e) {
 			res.put("message", "Bad request");

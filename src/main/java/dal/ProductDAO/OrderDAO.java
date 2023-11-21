@@ -6,10 +6,12 @@ package dal.ProductDAO;
 import Model.Product.Order;
 import Model.Product.Product;
 import Model.Product.ProductOrder;
+import controllers.product.processOrder;
 import dal.DAO.DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -31,10 +33,9 @@ public class OrderDAO extends DAO{
             PreparedStatement st = con.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Order newOrder = new Order(rs.getInt("order_id"), rs.getInt("user_id"), entries, 0, rs.getString("address"), rs.getString("contact"));
+                Order newOrder = new Order(rs.getInt("order_id"), rs.getInt("user_id"), entries, rs.getInt("discounted"), rs.getString("address"), rs.getString("contact"));
                 newOrder.setDate(rs.getTimestamp("date"));
                 newOrder.setStatus(rs.getInt("status"));
-                newOrder.setDiscounted(rs.getInt("discounted"));
                 return newOrder;
             }
         }
@@ -85,38 +86,33 @@ public class OrderDAO extends DAO{
         }
     }
 
+    
     @Override
     public boolean addObject(Object object) {
-        // {
-        //     "user_id": ,
-        //     "products": 
-        //         [
-        //             {
-        //                 "product_id": int,
-        //                 "nametag": String,
-        //                 "color": String,
-        //                 "size": int, // 0 - S, 1 - M, 2 - L, 3 - XL, 4 - XXL
-        //                 "squad_number": int,
-        //                 "quantity": int,
-        //             }, 
-        //              ...
-        //         ]
-        // }
+        return false;
+    }
+
+    public int addOrder(Object object) {
 
         try {
             Order order = (Order) object;
-            String sql = "insert into orders(user_id, status) value (?, 0)";
-            PreparedStatement st = con.prepareStatement(sql);
+            String sql = "insert into orders(user_id, status, discounted, address, contact) value (?, 0, ?, ?, ?)";
+            PreparedStatement st = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.setInt(1, order.getUser_id());
+            st.setInt(2, order.getDiscounted());
+            st.setString(3, order.getAddress());
+            st.setString(4, order.getContact());
             st.executeUpdate();
-            ProductOrderDAO prodOrderDAO = new ProductOrderDAO();
-            for (ProductOrder entry: order.getEntries()) {
-                prodOrderDAO.addObject(entry);
+            ResultSet rs = st.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1);
             }
-            return true;
+            else {
+                return -1;
+            }
         }
         catch (SQLException e) {
-            return false;
+            return -1;
         }
     }
     
@@ -126,7 +122,7 @@ public class OrderDAO extends DAO{
         // Chi cho phep update trang thai cua order
         try {
             Order newOrder = (Order) object;
-            String sql = "update orders set status = ? where orders_id = " + newOrder.getOrder_id();
+            String sql = "update orders set status = ? where order_id = " + newOrder.getOrder_id();
             PreparedStatement st = con.prepareStatement(sql);
             st.setInt(1, newOrder.getStatus());
             st.executeUpdate();
@@ -144,6 +140,8 @@ public class OrderDAO extends DAO{
             String sql = "delete from orders where order_id = " + objectId;
             PreparedStatement st = con.prepareStatement(sql);
             st.executeUpdate();
+            ProductOrderDAO prodOrderDAO = new ProductOrderDAO();
+            prodOrderDAO.deleteByOrderId(objectId);
             return true;
         } catch (SQLException e) {
 //            System.out.println(e);

@@ -110,6 +110,17 @@ public class ProductOrderDAO extends DAO {
         }
     }
 
+    public boolean deleteByOrderId(int orderId) {
+        try {
+            String sql = "delete from products_orders where order_id = " + orderId;
+            PreparedStatement st = con.prepareStatement(sql);
+            st.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
     @Override
     public List<Object> getAllObjects() {
         // ko cast duoc
