@@ -17,6 +17,7 @@ D:\projects\java\BTL-java\src\main\java\Model\Article\ReactionArticle.java
 D:\projects\java\BTL-java\src\main\java\Model\Product\Voucher.java
 D:\projects\java\BTL-java\src\main\java\controllers\article\ArticleServlet.java
 D:\projects\java\BTL-java\src\main\java\dal\UserDAO\PhoneNumberDAO.java
+D:\projects\java\BTL-java\src\main\java\helper\CORS.java
 D:\projects\java\BTL-java\src\main\java\controllers\product\processOrder.java
 D:\projects\java\BTL-java\src\main\java\controllers\product\deleteById.java
 D:\projects\java\BTL-java\src\main\java\controllers\product\getOrderByUserId.java
