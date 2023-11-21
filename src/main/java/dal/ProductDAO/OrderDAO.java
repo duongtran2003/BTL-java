@@ -31,7 +31,7 @@ public class OrderDAO extends DAO{
             PreparedStatement st = con.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Order newOrder = new Order(rs.getInt("order_id"), rs.getInt("user_id"), entries, 0);
+                Order newOrder = new Order(rs.getInt("order_id"), rs.getInt("user_id"), entries, 0, rs.getString("address"), rs.getString("contact"));
                 newOrder.setDate(rs.getTimestamp("date"));
                 newOrder.setStatus(rs.getInt("status"));
                 newOrder.setDiscounted(rs.getInt("discounted"));
@@ -126,9 +126,11 @@ public class OrderDAO extends DAO{
         // Chi cho phep update trang thai cua order
         try {
             Order newOrder = (Order) object;
-            String sql = "insert into orders(status) value (?)";
+            String sql = "update orders set status = ?, address = ?, contact = ? where orders_id = " + newOrder.getOrder_id();
             PreparedStatement st = con.prepareStatement(sql);
             st.setInt(1, newOrder.getStatus());
+            st.setString(2, newOrder.getAddress());
+            st.setString(3, newOrder.getContact());
             st.executeUpdate();
             return true;
         }

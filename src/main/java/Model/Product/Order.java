@@ -21,13 +21,17 @@ public class Order {
     private List<ProductOrder> entries = new ArrayList<> ();
     private int status;
     private int discounted;
+	private String address;
+	private String contact;
 
-    public Order(int order_id, int user_id, List<ProductOrder> entries, int discounted) {
+    public Order(int order_id, int user_id, List<ProductOrder> entries, int discounted, String address, String contact) {
         this.order_id = order_id;
         this.user_id = user_id;
         this.entries = entries;
-        this.status = 0; // 0 - pending, 1 - delivering, 2 - delivered
+        this.status = 0; // 0 - pending, 1 - delivering, 2 - delivered, 3 - failed
         this.discounted = discounted;
+		this.address = address;
+		this.contact = contact;
     }
 
 	public int getOrder_id() {
@@ -54,6 +58,14 @@ public class Order {
 		return status;
 	}
 
+	public String getAddress() {
+		return address;
+	}
+
+	public String getContact() {
+		return contact;
+	}
+
 	public void setStatus(int status) {
 		this.status = status;
 	}
@@ -64,6 +76,14 @@ public class Order {
 
     public void setDiscounted(int discounted) {
         this.discounted = discounted;
+    }
+
+    public void setAddress(String add) {
+        this.address = add;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
 }
