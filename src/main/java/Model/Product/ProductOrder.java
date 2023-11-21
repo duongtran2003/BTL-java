@@ -18,7 +18,7 @@ public class ProductOrder {
     private int squadNumber;
     private Product product; 
 
-    public ProductOrder(int product_order_id, Product prod, int order_id, String nametag, String color, int size, int squadnNumber, int quantity) {
+    public ProductOrder(int product_order_id, Product prod, int order_id, String nametag, String color, int size, int squadNumber, int quantity) {
         //0 - S, 1 - M, 2 - L, 3 - XL, 4 - XXL
         this.product_order_id = product_order_id;
         this.product = prod;
@@ -26,7 +26,7 @@ public class ProductOrder {
         this.nametag = nametag;
         this.color = color;
         this.size = size;
-        this.squadNumber = squadnNumber;
+        this.squadNumber = squadNumber;
         this.quantity = quantity;
     }
 

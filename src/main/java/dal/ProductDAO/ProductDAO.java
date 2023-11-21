@@ -98,6 +98,18 @@ public class ProductDAO extends DAO {
 		}
 	}
 
+	public boolean sellProduct(int productId) {
+		try {
+			String sql = "update products set sold = sold + 1 where product_id = " + productId;
+			PreparedStatement st = con.prepareStatement(sql);
+			st.executeUpdate();
+			return true;
+		}
+		catch (SQLException e) {
+			return false;
+		}
+	}
+
 	@Override
 	public boolean deleteObject(int id) {
 		try {
