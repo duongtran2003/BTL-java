@@ -5,12 +5,11 @@
 
 package controllers.product;
 
-import Model.Product.HasVoucher;
-import static common.product.Constant.URL_HAS_VOUCHER_GET_BY_USER;
-import dal.ProductDAO.HasVoucherDAO;
+import Model.Product.Review;
+import static common.product.Constant.URL_LIST_REVIEW_GET_BY_PRODUCT_ID;
+import dal.ProductDAO.ReviewDAO;
 import helper.JSONHelper;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -24,21 +23,23 @@ import java.util.Map;
  *
  * @author DELL
  */
-@WebServlet(name="getHasVoucherByUser", urlPatterns={URL_HAS_VOUCHER_GET_BY_USER})
-public class getHasVoucherByUser extends HttpServlet {
+@WebServlet(name="getListReviewbyProductId", urlPatterns={URL_LIST_REVIEW_GET_BY_PRODUCT_ID})
+public class getListReviewbyProductId extends HttpServlet {
    
-    // lấy ra những voucher mà User đang có
-    private HasVoucherDAO hasVoucherDAO=new HasVoucherDAO();
+   
+   
+    // lấy ra <List>những review mà Product đang có
+    private ReviewDAO reviewDAO=new ReviewDAO();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map<String, Object> res = new HashMap<> ();
         try {
             int id = Integer.parseInt(req.getPathInfo().substring(1));
-            List <HasVoucher> check =  hasVoucherDAO.getListHasVouchersByUser(id);
+            List <Review> check =  reviewDAO.getListReviewByProduct(id);
             if(check==null || check.isEmpty()){
-                res.put("message", "user nay khong so huu voucher");
-               
+                res.put("message", "Product này chưa được ai đánh giá");
                 JSONHelper.sendJsonAsResponse(resp, 404, res);
+                
             }
             else {
                 JSONHelper.sendJsonAsResponse(resp, 200,check);
@@ -47,11 +48,12 @@ public class getHasVoucherByUser extends HttpServlet {
         } 
         catch (NumberFormatException e) {
                 res.put("message", "bad request, check url params again");
-             
                 JSONHelper.sendJsonAsResponse(resp, 400, res);
         }
     }
     
+
+   
     @Override
     public String getServletInfo() {
         return "Short description";
