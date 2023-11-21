@@ -126,11 +126,9 @@ public class OrderDAO extends DAO{
         // Chi cho phep update trang thai cua order
         try {
             Order newOrder = (Order) object;
-            String sql = "update orders set status = ?, address = ?, contact = ? where orders_id = " + newOrder.getOrder_id();
+            String sql = "update orders set status = ? where orders_id = " + newOrder.getOrder_id();
             PreparedStatement st = con.prepareStatement(sql);
             st.setInt(1, newOrder.getStatus());
-            st.setString(2, newOrder.getAddress());
-            st.setString(3, newOrder.getContact());
             st.executeUpdate();
             return true;
         }
