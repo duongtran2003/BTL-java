@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import Model.Product.Product;
 import dal.ProductDAO.ProductDAO;
+import helper.CORS;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -58,6 +59,7 @@ public class editProduct extends HttpServlet {
 	 */
 	protected void doPatch(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String jsonFromRequest = JSONHelper.readJSON(request);
+		CORS.disableCORS(response, "patch");
 		Map<String, Object> fields = new JSONObject(jsonFromRequest).toMap();
 		Map<String, String> res = new HashMap<> ();
 		if (fields.get("product_id") == null && fields.get("product_id").toString().trim().equals("")) {
@@ -68,6 +70,10 @@ public class editProduct extends HttpServlet {
 		ProductDAO prodDao = new ProductDAO();
 		try {
 			Product oldProd = (Product) prodDao.getById(Integer.parseInt(fields.get("product_id").toString()));
+			if (oldProd == null) {
+				res.put("message", "wrong id");
+				JSONHelper.sendJsonAsResponse(response, 400, res);
+			}
 			if (fields.get("product_name") != null && !fields.get("product_name").toString().equals("")) {
 				oldProd.setProduct_name(fields.get("product_name").toString());
 			}

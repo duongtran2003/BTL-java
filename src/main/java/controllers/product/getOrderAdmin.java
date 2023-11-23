@@ -13,6 +13,7 @@ import Model.Product.Order;
 import Model.User.User;
 import dal.ProductDAO.OrderDAO;
 import dal.UserDAO.UserDAO;
+import helper.CORS;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -32,6 +33,7 @@ public class getOrderAdmin extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getPathInfo().substring(1);
+		CORS.disableCORS(response, "get");
 		Map<String, Object> res = new HashMap<String, Object> ();
 		try {
 			OrderDAO orderDao = new OrderDAO();
@@ -39,12 +41,17 @@ public class getOrderAdmin extends HttpServlet {
 			for (Cookie cookie: cookies) {
 				if (cookie.getName().equals("user_id")) {
 					int user_id = Integer.parseInt(cookie.getValue());
-					
 					UserDAO userDAO = new UserDAO();
 					User currentUser = (User) userDAO.getById(user_id);
+					if (currentUser == null) {
+						res.put("message", "wrong user id");
+						JSONHelper.sendJsonAsResponse(response, 400, res);
+						return;
+					}
 					if (currentUser.getUser_role() != 2) {
 						res.put("message", "ko phai admin");
 						JSONHelper.sendJsonAsResponse(response, 403, res);
+						return;
 					}
 					break;
 				}
@@ -52,11 +59,13 @@ public class getOrderAdmin extends HttpServlet {
 			int _id = Integer.parseInt(id);
 			Order order = (Order) orderDao.getOrderAdmin();
 			JSONHelper.sendJsonAsResponse(response, 200, order);
+			return;
 		}
 		catch (Exception e) {
 			res.put("message", "bad request, check url params again");
 			response.setStatus(400);
 			JSONHelper.sendJsonAsResponse(response, 400, res);
+			return;
 		}
 	}
 

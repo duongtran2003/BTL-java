@@ -24,14 +24,13 @@ import dal.ProductDAO.OrderDAO;
 import dal.ProductDAO.ProductDAO;
 import dal.ProductDAO.ProductOrderDAO;
 import dal.ProductDAO.VoucherDAO;
+import helper.CORS;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-
 
 /**
  *
@@ -41,27 +40,29 @@ import jakarta.servlet.http.HttpServletResponse;
 public class createOrder extends HttpServlet {
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		Map<String, Object> jsonMap = new JSONObject(JSONHelper.readJSON(request)).toMap();
-        // {
-        //     "user_id": ,
-        //     "products": 
-        //         [
-        //             {
-        //                 "product_id": int,
-        //                 "nametag": String,
-        //                 "color": String,
-        //                 "size": int, // 0 - S, 1 - M, 2 - L, 3 - XL, 4 - XXL
-        //                 "squad_number": int,
-        //                 "quantity": int,
-        //             }, 
-        //              ...
-        //         ],
-		//		"address": ,
-		//		"contact": ,
-		//		"has_voucher_id": ,
-        // }
-		Map<String, String> res = new HashMap<> ();
+		CORS.disableCORS(response, "post");
+		// {
+		// "user_id": ,
+		// "products":
+		// [
+		// {
+		// "product_id": int,
+		// "nametag": String,
+		// "color": String,
+		// "size": int, // 0 - S, 1 - M, 2 - L, 3 - XL, 4 - XXL
+		// "squad_number": int,
+		// "quantity": int,
+		// },
+		// ...
+		// ],
+		// "address": ,
+		// "contact": ,
+		// "has_voucher_id": ,
+		// }
+		Map<String, String> res = new HashMap<>();
 		try {
 			int has_voucher_id = Integer.parseInt(jsonMap.get("has_voucher_id").toString());
 			HasVoucherDAO hasVoucherDAO = new HasVoucherDAO();
@@ -81,13 +82,13 @@ public class createOrder extends HttpServlet {
 			int user_id = Integer.parseInt(jsonMap.get("user_id").toString());
 			String address = jsonMap.get("address").toString();
 			String contact = jsonMap.get("contact").toString();
-			List<ProductOrder> prods = new ArrayList<> ();
+			List<ProductOrder> prods = new ArrayList<>();
 			int order_id = orderDAO.addOrder(new Order(0, user_id, prods, discounted, address, contact));
 			ProductDAO productDAO = new ProductDAO();
 			ProductOrderDAO productOrderDAO = new ProductOrderDAO();
 			if (order_id != -1) {
 				List<Map<String, String>> prodsInfo = (ArrayList<Map<String, String>>) jsonMap.get("products");
-				for (Map<String, String> prod: prodsInfo) {
+				for (Map<String, String> prod : prodsInfo) {
 					int product_id = Integer.parseInt(prod.get("product_id"));
 					String nametag = prod.get("nametag");
 					String color = prod.get("color");
@@ -95,17 +96,18 @@ public class createOrder extends HttpServlet {
 					int squad_number = Integer.parseInt(prod.get("squad_number"));
 					int quantity = Integer.parseInt(prod.get("quantity"));
 					Product newProd = (Product) productDAO.getById(product_id);
-					productOrderDAO.addObject(new ProductOrder(0, newProd, order_id, nametag, color, size, squad_number, quantity));
+					productOrderDAO.addObject(
+							new ProductOrder(0, newProd, order_id, nametag, color, size, squad_number, quantity));
 				}
-			}
-			else {
+			} else {
 				res.put("message", "Co van de xay ra trong luc tao order");
 				JSONHelper.sendJsonAsResponse(response, 500, res);
+				return;
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			res.put("message", "Bad request");
 			JSONHelper.sendJsonAsResponse(response, 400, res);
+			return;
 		}
 	}
 

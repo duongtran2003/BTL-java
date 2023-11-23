@@ -16,6 +16,7 @@ import java.util.List;
 
 import dal.ProductDAO.OrderDAO;
 import dal.UserDAO.UserDAO;
+import helper.CORS;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -28,18 +29,19 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author pc
  */
-@WebServlet(name = "deleteOrderById", urlPatterns = {"/product/deleteOrderById/*"})
+@WebServlet(name = "deleteOrderById", urlPatterns = { "/product/deleteOrderById/*" })
 public class deleteOrderById extends HttpServlet {
 
-	
 	@Override
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String id = request.getPathInfo().substring(1);
-		Map<String, Object> res = new HashMap<String, Object> ();
+		CORS.disableCORS(response, "delete");
+		Map<String, Object> res = new HashMap<String, Object>();
 		try {
 			OrderDAO orderDao = new OrderDAO();
 			Cookie[] cookies = request.getCookies();
-			for (Cookie cookie: cookies) {
+			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("user_id")) {
 					int user_id = Integer.parseInt(cookie.getValue());
 					UserDAO userDAO = new UserDAO();
@@ -48,6 +50,7 @@ public class deleteOrderById extends HttpServlet {
 					if ((orders == null || orders.size() == 0) && currentUser.getUser_role() != 2) {
 						res.put("message", "ko phai order cua ban, ban cung chang phai la admin");
 						JSONHelper.sendJsonAsResponse(response, 403, res);
+						return;
 					}
 					break;
 				}
@@ -56,16 +59,15 @@ public class deleteOrderById extends HttpServlet {
 			orderDao.deleteObject(_id);
 			res.put("message", "success");
 			JSONHelper.sendJsonAsResponse(response, 200, res);
-		}
-		catch (NumberFormatException e) {
+			return;
+		} catch (NumberFormatException e) {
 			res.put("message", "bad request, check url params again");
 			response.setStatus(400);
 			JSONHelper.sendJsonAsResponse(response, 400, res);
+			return;
 		}
 	}
 
-	
-	
 	@Override
 	public String getServletInfo() {
 		return "Short description";

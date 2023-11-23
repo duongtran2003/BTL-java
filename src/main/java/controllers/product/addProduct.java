@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import Model.Product.Product;
 import dal.ProductDAO.ProductDAO;
+import helper.CORS;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -30,6 +31,7 @@ public class addProduct extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		CORS.disableCORS(response, "post");
 		Map<String, Object> jsonMap = new JSONObject(JSONHelper.readJSON(request)).toMap();
 		ProductDAO prodDao = new ProductDAO();
 		String productName = "";
@@ -67,10 +69,12 @@ public class addProduct extends HttpServlet {
 		if (newId != -1) {
 			Product createdProd = (Product) prodDao.getById(newId);
 			JSONHelper.sendJsonAsResponse(response, 200, createdProd);
+			return;
 		}
 		else {
 			res.put("message", "bad request, trung ten");
 			JSONHelper.sendJsonAsResponse(response, 400, res);
+			return;
 		}
 	}
 
