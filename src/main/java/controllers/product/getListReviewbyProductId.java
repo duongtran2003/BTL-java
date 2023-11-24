@@ -8,6 +8,7 @@ package controllers.product;
 import Model.Product.Review;
 import static common.product.Constant.URL_LIST_REVIEW_GET_BY_PRODUCT_ID;
 import dal.ProductDAO.ReviewDAO;
+import helper.CORS;
 import helper.JSONHelper;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -31,15 +32,15 @@ public class getListReviewbyProductId extends HttpServlet {
     // lấy ra <List>những review mà Product đang có
     private ReviewDAO reviewDAO=new ReviewDAO();
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException { 
+        CORS.disableCORS(resp, "get");
         Map<String, Object> res = new HashMap<> ();
         try {
             int id = Integer.parseInt(req.getPathInfo().substring(1));
             List <Review> check =  reviewDAO.getListReviewByProduct(id);
             if(check==null || check.isEmpty()){
-                res.put("message", "Product này chưa được ai đánh giá");
+                res.put("message", "Product này chưa có đánh giá");
                 JSONHelper.sendJsonAsResponse(resp, 404, res);
-                
             }
             else {
                 JSONHelper.sendJsonAsResponse(resp, 200,check);

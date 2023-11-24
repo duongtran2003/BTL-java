@@ -6,12 +6,16 @@
 package controllers.product;
 
 import Model.Product.HasVoucher;
+import Model.User.User;
 import static common.product.Constant.URL_HAS_VOUCHER_DELETE_WHEN_EXPIRED;
 import dal.ProductDAO.HasVoucherDAO;
+import dal.UserDAO.UserDAO;
+import helper.CORS;
 import helper.JSONHelper;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -31,23 +35,45 @@ public class deleteHasVoucherWhenExpired extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map<String, Object> res = new HashMap<> ();
+        CORS.disableCORS(resp, "delete");
+        UserDAO userDAO=new UserDAO();
+        Cookie[] cookies = req.getCookies();
+        if (cookies == null) {
+                res.put("message", "thieu cookie");
+                JSONHelper.sendJsonAsResponse(resp, 400, res);
+        }
+        for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("user_id")) {
+                        int user_id = Integer.parseInt(cookie.getValue());
+                        User currentUser = (User) userDAO.getById(user_id);
+                        if (currentUser == null) {
+                                res.put("message", "wrong user id");
+                                JSONHelper.sendJsonAsResponse(resp, 400, res);
+                                return;
+                        }
+                        if (currentUser.getUser_role() != 2) {
+                                res.put("message", "ko phai admin");
+                                JSONHelper.sendJsonAsResponse(resp, 401, res);
+                                return;
+                        }
+                        break;
+                }
+        }
+
         List <HasVoucher> a= hasVoucherDAO.queryObjects();
         if(a==null){
-            res.put("message", "HasVoucher trống ");
-            resp.setStatus(400);
+            res.put("message", "HasVoucher trống");
             JSONHelper.sendJsonAsResponse(resp, 404, res);
         }
         else{
             for(HasVoucher hasVoucher:a){
                 if(hasVoucher.getExpiration_date().getTime()<System.currentTimeMillis()){
-                    boolean isSuccess = hasVoucherDAO.deleteObject(hasVoucher.getHas_voucher_id());
-                    JSONHelper.sendJsonAsResponse(resp, 200, hasVoucher);
-                    
+                    hasVoucherDAO.deleteObject(hasVoucher.getHas_voucher_id());
                 }
             }
-            
-        }
-        
+            res.put("message", "Sussces");
+            JSONHelper.sendJsonAsResponse(resp, 200,res);
+        }     
     }
     @Override
     public String getServletInfo() {

@@ -6,10 +6,11 @@
 package controllers.product;
 
 import Model.Product.Voucher;
+import static common.product.Constant.URL_VOUCHER_GET_ALL_VOUCHER;
 import dal.ProductDAO.VoucherDAO;
+import helper.CORS;
 import helper.JSONHelper;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,23 +24,22 @@ import java.util.Map;
  *
  * @author DELL
  */
-@WebServlet(name="getAllVoucher", urlPatterns={"/product/voucher/getallvoucher/*"})
+@WebServlet(name="getAllVoucher", urlPatterns={URL_VOUCHER_GET_ALL_VOUCHER})
 public class getAllVoucher extends HttpServlet {
     
     // lấy ra tất cả voucher hiện có của shop
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        CORS.disableCORS(resp, "get");
         Map<String, Object> res = new HashMap<> ();
         VoucherDAO voucherDAO=new VoucherDAO();
-        String id = req.getPathInfo().substring(1);
         List <Voucher> vouchers=voucherDAO.queryObjects();
         if(vouchers==null){
-            res.put("Messge", "Voucher trống");
+            res.put("Messge", "Voucher không có trong dữ liệu");
             JSONHelper.sendJsonAsResponse(resp, 404, res);
         }
         else{
-            res.put("Messge", "Success");
-            JSONHelper.sendJsonAsResponse(resp, 404, vouchers);
+            JSONHelper.sendJsonAsResponse(resp, 200, vouchers);
         }
         
         

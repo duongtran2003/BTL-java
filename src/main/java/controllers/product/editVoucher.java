@@ -10,10 +10,12 @@ import Model.User.User;
 import static common.product.Constant.URL_VOUCHER_EDIT;
 import dal.ProductDAO.VoucherDAO;
 import dal.UserDAO.UserDAO;
+import helper.CORS;
 import helper.JSONHelper;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -41,48 +43,59 @@ public class editVoucher extends HttpServlet {
         }
     }
     protected void doPatch(HttpServletRequest request, HttpServletResponse response) throws IOException {
+                CORS.disableCORS(response, "patch");
 		String jsonFromRequest = JSONHelper.readJSON(request);
 		JSONObject jSONObject= new JSONObject(jsonFromRequest);
 		Map<String, String> res = new HashMap<> ();
-		if (jSONObject.get("voucher_id") == null && jSONObject.get("voucher_id").toString().trim().equals("")) {
-			res.put("message", "bad request, json khong co id");
-			JSONHelper.sendJsonAsResponse(response, 400, res);
-			return;
-		}
+                Cookie[] cookies = request.getCookies();
+                if (cookies == null) {
+                        res.put("message", "thieu cookie");
+                        JSONHelper.sendJsonAsResponse(response, 400, res);
+                }
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("user_id")) {
+                        int user_id = Integer.parseInt(cookie.getValue());
+                        User currentUser = (User) userDAO.getById(user_id);
+                        if (currentUser == null) {
+                                res.put("message", "wrong user id");
+                                JSONHelper.sendJsonAsResponse(response, 400, res);
+                                return;
+                        }
+                        if (currentUser.getUser_role() != 2) {
+                                res.put("message", "ko phai admin");
+                                JSONHelper.sendJsonAsResponse(response, 401, res);
+                                return;
+                        }
+                        break;
+                    }
+                }
 		
 		try {
-			
+                        if (jSONObject.get("voucher_id") == null && jSONObject.get("voucher_id").toString().trim().equals("")) {
+                            res.put("message", "bad request, json khong co id");
+                            JSONHelper.sendJsonAsResponse(response, 400, res);
+                            return;
+                        }
                         Voucher oldV = (Voucher) voucherDAO.getById(Integer.parseInt(jSONObject.get("voucher_id").toString()));
-                        int user_id=Integer.parseInt(jSONObject.get("admin_user_id").toString());
-                        User user= (User) userDAO.getById(user_id);
-                        int role= user.getUser_role();
-                        if(role==2){
-                            if (jSONObject.get("discount_amount") != null && !jSONObject.get("discount_amount").toString().equals("")) {
-                                    int discount= Integer.parseInt(jSONObject.get("discount_amount").toString());
-                                    if(discount<=100 && discount>=0) oldV.setDiscount_amount(discount);
-                                   
-                            }
-                            if (jSONObject.get("expire_time") != null && !jSONObject.get("expire_time").toString().equals("")) {
-                                    oldV.setExpire_time(Integer.parseInt(jSONObject.get("expire_time").toString()));
-                            }
+                        if (jSONObject.get("discount_amount") != null && !jSONObject.get("discount_amount").toString().equals("")) {
+                                int discount= Integer.parseInt(jSONObject.get("discount_amount").toString());
+                                if(discount<=100 && discount>=0) oldV.setDiscount_amount(discount);
 
-                            boolean status = voucherDAO.updateObject(oldV);
-                            if (!status) {
-                                    res.put("message", "bad request");
-                                    JSONHelper.sendJsonAsResponse(response, 400, res);
-                                   
-                            }
-                            else {
-                                    JSONHelper.sendJsonAsResponse(response, 200, oldV);
-                                    
-                            }
                         }
-                        else{
-                            res.put("message", "Chỉ Admin mới có thể thực hiện tác vụ này");
-                            JSONHelper.sendJsonAsResponse(response, 403, res);
-                            
+                        if (jSONObject.get("expire_time") != null && !jSONObject.get("expire_time").toString().equals("")) {
+                                oldV.setExpire_time(Integer.parseInt(jSONObject.get("expire_time").toString()));
                         }
-                            
+
+                        boolean status = voucherDAO.updateObject(oldV);
+                        if (!status) {
+                                res.put("message", "Server's error");
+                                JSONHelper.sendJsonAsResponse(response, 500, res);
+
+                        }
+                        else {
+                                JSONHelper.sendJsonAsResponse(response, 200, oldV);
+                        }
+                       
 		}
 		catch (IOException | NumberFormatException | JSONException e) {
 			res.put("message", "bad request, sai kieu du lieu");
