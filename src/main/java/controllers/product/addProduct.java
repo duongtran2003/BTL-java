@@ -12,11 +12,14 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import Model.Product.Product;
+import Model.User.User;
 import dal.ProductDAO.ProductDAO;
+import dal.UserDAO.UserDAO;
 import helper.CORS;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,7 +28,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author pc
  */
-@WebServlet(name = "addProduct", urlPatterns = {"/product/addProduct"})
+@WebServlet(name = "addProduct", urlPatterns = { "/product/addProduct" })
 public class addProduct extends HttpServlet {
 
 	@Override
@@ -43,8 +46,27 @@ public class addProduct extends HttpServlet {
 		int totalRatingTime = 0;
 		int sold = 0;
 		int discounted = 0;
-		Map<String, Object> res = new HashMap<> ();
+		Map<String, Object> res = new HashMap<>();
 		try {
+			Cookie[] cookies = request.getCookies();
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("user_id")) {
+					int user_id = Integer.parseInt(cookie.getValue());
+					UserDAO userDAO = new UserDAO();
+					User currentUser = (User) userDAO.getById(user_id);
+					if (currentUser == null) {
+						res.put("message", "wrong user id");
+						JSONHelper.sendJsonAsResponse(response, 400, res);
+						return;
+					}
+					if (currentUser.getUser_role() != 2) {
+						res.put("message", "ko phai admin");
+						JSONHelper.sendJsonAsResponse(response, 403, res);
+						return;
+					}
+					break;
+				}
+			}
 			productName = jsonMap.get("product_name").toString();
 			if (jsonMap.get("category").toString().equals("1")) {
 				category = true;
@@ -59,19 +81,18 @@ public class addProduct extends HttpServlet {
 			totalRatingTime = 0;
 			sold = 0;
 			discounted = Integer.parseInt(jsonMap.get("discounted").toString());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			res.put("message", "bad request, thieu field");
 			JSONHelper.sendJsonAsResponse(response, 400, res);
 		}
-		Product newProd = new Product(0, productName, category, imagePath, team, price, rating, sold, discounted, totalRatingTime);
+		Product newProd = new Product(0, productName, category, imagePath, team, price, rating, sold, discounted,
+				totalRatingTime);
 		int newId = prodDao.addProduct(newProd);
 		if (newId != -1) {
 			Product createdProd = (Product) prodDao.getById(newId);
 			JSONHelper.sendJsonAsResponse(response, 200, createdProd);
 			return;
-		}
-		else {
+		} else {
 			res.put("message", "bad request, trung ten");
 			JSONHelper.sendJsonAsResponse(response, 400, res);
 			return;

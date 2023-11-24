@@ -8,11 +8,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import Model.User.User;
 import dal.ProductDAO.ProductDAO;
+import dal.UserDAO.UserDAO;
 import helper.CORS;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -51,6 +54,25 @@ public class deleteById extends HttpServlet {
 		CORS.disableCORS(response, "delete");
 		Map<String, Object> res = new HashMap<String, Object>();
 		try {
+			Cookie[] cookies = request.getCookies();
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("user_id")) {
+					int user_id = Integer.parseInt(cookie.getValue());
+					UserDAO userDAO = new UserDAO();
+					User currentUser = (User) userDAO.getById(user_id);
+					if (currentUser == null) {
+						res.put("message", "wrong user id");
+						JSONHelper.sendJsonAsResponse(response, 400, res);
+						return;
+					}
+					if (currentUser.getUser_role() != 2) {
+						res.put("message", "ko phai admin");
+						JSONHelper.sendJsonAsResponse(response, 403, res);
+						return;
+					}
+					break;
+				}
+			}
 			int _id = Integer.parseInt(id);
 			ProductDAO prodDao = new ProductDAO();
 			boolean success = prodDao.deleteObject(_id);
