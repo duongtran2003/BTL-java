@@ -70,7 +70,7 @@ public class processOrder extends HttpServlet {
 			User currentUser = (User) userDAO.getById(user_id);
 			if (currentUser == null) {
 				res.put("Message", "wrong user id");
-				JSONHelper.sendJsonAsResponse(response, 401, currentUser);
+				JSONHelper.sendJsonAsResponse(response, 400, currentUser);
 				return;
 			}
 			if (currentUser.getUser_role() != 2) {
@@ -93,7 +93,7 @@ public class processOrder extends HttpServlet {
 			}
 
 		} catch (Exception e) {
-			res.put("message", "Bad request");
+			res.put("message", "bad request");
 			JSONHelper.sendJsonAsResponse(response, 400, res);
 			return;
 		}

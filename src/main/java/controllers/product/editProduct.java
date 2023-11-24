@@ -76,6 +76,10 @@ public class editProduct extends HttpServlet {
 				int user_id = Integer.parseInt(cookie.getValue());
 				UserDAO userDAO = new UserDAO();
 				User currentUser = (User) userDAO.getById(user_id);
+				if (cookies == null) {
+					res.put("message", "thieu cookie");
+					JSONHelper.sendJsonAsResponse(response, 400, res);
+				}
 				if (currentUser == null) {
 					res.put("message", "wrong user id");
 					JSONHelper.sendJsonAsResponse(response, 400, res);
@@ -83,7 +87,7 @@ public class editProduct extends HttpServlet {
 				}
 				if (currentUser.getUser_role() != 2) {
 					res.put("message", "ko phai admin");
-					JSONHelper.sendJsonAsResponse(response, 403, res);
+					JSONHelper.sendJsonAsResponse(response, 401, res);
 					return;
 				}
 				break;

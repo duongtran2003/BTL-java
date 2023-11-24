@@ -7,6 +7,7 @@ package controllers.product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import Model.Product.Order;
@@ -26,19 +27,23 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author pc
  */
-@WebServlet(name = "getOrderAdmin", urlPatterns = {"/product/getOrderAdmin"})
+@WebServlet(name = "getOrderAdmin", urlPatterns = { "/product/getOrderAdmin" })
 public class getOrderAdmin extends HttpServlet {
 
-		
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String id = request.getPathInfo().substring(1);
 		CORS.disableCORS(response, "get");
-		Map<String, Object> res = new HashMap<String, Object> ();
+		Map<String, Object> res = new HashMap<String, Object>();
 		try {
 			OrderDAO orderDao = new OrderDAO();
 			Cookie[] cookies = request.getCookies();
-			for (Cookie cookie: cookies) {
+			if (cookies == null) {
+				res.put("message", "thieu cookie");
+				JSONHelper.sendJsonAsResponse(response, 400, res);
+			}
+			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("user_id")) {
 					int user_id = Integer.parseInt(cookie.getValue());
 					UserDAO userDAO = new UserDAO();
@@ -50,18 +55,17 @@ public class getOrderAdmin extends HttpServlet {
 					}
 					if (currentUser.getUser_role() != 2) {
 						res.put("message", "ko phai admin");
-						JSONHelper.sendJsonAsResponse(response, 403, res);
+						JSONHelper.sendJsonAsResponse(response, 401, res);
 						return;
 					}
 					break;
 				}
 			}
 			int _id = Integer.parseInt(id);
-			Order order = (Order) orderDao.getOrderAdmin();
+			List<Order> order = orderDao.getOrderAdmin();
 			JSONHelper.sendJsonAsResponse(response, 200, order);
 			return;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			res.put("message", "bad request, check url params again");
 			response.setStatus(400);
 			JSONHelper.sendJsonAsResponse(response, 400, res);

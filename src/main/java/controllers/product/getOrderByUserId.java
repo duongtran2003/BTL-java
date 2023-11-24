@@ -25,7 +25,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author pc
  */
-@WebServlet(name = "getOrderByUserId", urlPatterns = { "/product/getOrderByUserId/*" })
+@WebServlet(name = "getOrderByUserId", urlPatterns = { "/product/getOrderByUserId" })
 public class getOrderByUserId extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -37,12 +37,16 @@ public class getOrderByUserId extends HttpServlet {
 			int _id = Integer.parseInt(id);
 			OrderDAO orderDao = new OrderDAO();
 			Cookie[] cookies = request.getCookies();
+			if (cookies == null) {
+				res.put("message", "thieu cookie");
+				JSONHelper.sendJsonAsResponse(response, 400, res);
+			}
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("user_id")) {
 					int user_id = Integer.parseInt(cookie.getValue());
 					if (user_id != _id) {
-						res.put("message", "ko phai order cua ban");
-						JSONHelper.sendJsonAsResponse(response, 403, res);
+						res.put("message", "khong phai ban");
+						JSONHelper.sendJsonAsResponse(response, 401, res);
 						return;
 					}
 					break;
@@ -52,8 +56,7 @@ public class getOrderByUserId extends HttpServlet {
 			JSONHelper.sendJsonAsResponse(response, 200, orders);
 			return;
 		} catch (NumberFormatException e) {
-			res.put("message", "bad request, check url params again");
-			response.setStatus(400);
+			res.put("message", "bad request, co loi xay ra");
 			JSONHelper.sendJsonAsResponse(response, 400, res);
 			return;
 		}

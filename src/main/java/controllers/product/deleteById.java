@@ -55,6 +55,10 @@ public class deleteById extends HttpServlet {
 		Map<String, Object> res = new HashMap<String, Object>();
 		try {
 			Cookie[] cookies = request.getCookies();
+			if (cookies == null) {
+				res.put("message", "thieu cookie");
+				JSONHelper.sendJsonAsResponse(response, 400, res);
+			}
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("user_id")) {
 					int user_id = Integer.parseInt(cookie.getValue());
@@ -67,7 +71,7 @@ public class deleteById extends HttpServlet {
 					}
 					if (currentUser.getUser_role() != 2) {
 						res.put("message", "ko phai admin");
-						JSONHelper.sendJsonAsResponse(response, 403, res);
+						JSONHelper.sendJsonAsResponse(response, 401, res);
 						return;
 					}
 					break;

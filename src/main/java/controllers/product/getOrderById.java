@@ -37,13 +37,17 @@ public class getOrderById extends HttpServlet {
 		try {
 			OrderDAO orderDao = new OrderDAO();
 			Cookie[] cookies = request.getCookies();
+			if (cookies == null) {
+				res.put("message", "thieu cookie");
+				JSONHelper.sendJsonAsResponse(response, 400, res);
+			}
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("user_id")) {
 					int user_id = Integer.parseInt(cookie.getValue());
 					List<Order> orders = orderDao.getByUserId(user_id);
 					if (orders == null || orders.size() == 0) {
 						res.put("message", "ko phai order cua ban");
-						JSONHelper.sendJsonAsResponse(response, 403, res);
+						JSONHelper.sendJsonAsResponse(response, 401, res);
 						return;
 					}
 					break;

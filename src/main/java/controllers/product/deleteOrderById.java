@@ -41,15 +41,24 @@ public class deleteOrderById extends HttpServlet {
 		try {
 			OrderDAO orderDao = new OrderDAO();
 			Cookie[] cookies = request.getCookies();
+			if (cookies == null) {
+				res.put("message", "thieu cookie");
+				JSONHelper.sendJsonAsResponse(response, 400, res);
+			}
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("user_id")) {
 					int user_id = Integer.parseInt(cookie.getValue());
 					UserDAO userDAO = new UserDAO();
 					User currentUser = (User) userDAO.getById(user_id);
+					if (currentUser == null) {
+						res.put("message", "wrong user id");
+						JSONHelper.sendJsonAsResponse(response, 400, res);
+						return;
+					}
 					List<Order> orders = orderDao.getByUserId(user_id);
 					if ((orders == null || orders.size() == 0) && currentUser.getUser_role() != 2) {
 						res.put("message", "ko phai order cua ban, ban cung chang phai la admin");
-						JSONHelper.sendJsonAsResponse(response, 403, res);
+						JSONHelper.sendJsonAsResponse(response, 401, res);
 						return;
 					}
 					break;

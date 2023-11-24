@@ -61,7 +61,7 @@ public class addProduct extends HttpServlet {
 					}
 					if (currentUser.getUser_role() != 2) {
 						res.put("message", "ko phai admin");
-						JSONHelper.sendJsonAsResponse(response, 403, res);
+						JSONHelper.sendJsonAsResponse(response, 401, res);
 						return;
 					}
 					break;
