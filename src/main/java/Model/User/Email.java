@@ -34,5 +34,17 @@ public class Email {
     public String toString() {
         return "Email{" + "email_id=" + email_id + ", user_id=" + user_id + ", email=" + email + '}';
     }
+
+    public void setEmail_id(int email_id) {
+        this.email_id = email_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
     
 }

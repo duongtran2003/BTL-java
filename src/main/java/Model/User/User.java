@@ -58,6 +58,10 @@ public class User {
         this.login_fail = login_fail;
         this.login_cooldown = login_cooldown;
     }
+
+    public User() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     
 
@@ -87,6 +91,22 @@ public class User {
 
     public String getCountry() {
         return country;
+    }
+
+    public void setPass_word_latest(int pass_word_latest) {
+        this.pass_word_latest = pass_word_latest;
+    }
+
+    public void setPass_word_latest_time(long pass_word_latest_time) {
+        this.pass_word_latest_time = pass_word_latest_time;
+    }
+
+    public void setLogin_fail(int login_fail) {
+        this.login_fail = login_fail;
+    }
+
+    public void setLogin_cooldown(long login_cooldown) {
+        this.login_cooldown = login_cooldown;
     }
 
     public String getCity() {
@@ -168,4 +188,93 @@ public class User {
     public String toString() {
         return "User{" + "user_id=" + user_id + ", user_name=" + user_name + ", pass_word=" + pass_word + ", full_name=" + full_name + ", date_of_birth=" + date_of_birth + ", gender=" + gender + ", country=" + country + ", city=" + city + ", district=" + district + ", detail_position=" + detail_position + ", avatar_image_path=" + avatar_image_path + ", link_app=" + link_app + ", link_social=" + link_social + ", Favor_fc=" + Favor_fc + ", description_text=" + description_text + ", uid=" + uid + ", user_role=" + user_role + ", namechange_cooldown=" + namechange_cooldown + ", search_permission=" + search_permission + ", likes=" + likes + ", dislikes=" + dislikes + ", score_to_award=" + score_to_award + ", pass_word_latest=" + pass_word_latest + ", pass_word_latest_time=" + pass_word_latest_time + ", login_fail=" + login_fail + ", login_cooldown=" + login_cooldown + '}';
     }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
+    public void setPass_word(int pass_word) {
+        this.pass_word = pass_word;
+    }
+
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
+    }
+
+    public void setDate_of_birth(String date_of_birth) {
+        this.date_of_birth = date_of_birth;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public void setDetail_position(String detail_position) {
+        this.detail_position = detail_position;
+    }
+
+    public void setAvatar_image_path(String avatar_image_path) {
+        this.avatar_image_path = avatar_image_path;
+    }
+
+    public void setLink_app(String link_app) {
+        this.link_app = link_app;
+    }
+
+    public void setLink_social(String link_social) {
+        this.link_social = link_social;
+    }
+
+    public void setFavor_fc(String Favor_fc) {
+        this.Favor_fc = Favor_fc;
+    }
+
+    public void setDescription_text(String description_text) {
+        this.description_text = description_text;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public void setUser_role(int user_role) {
+        this.user_role = user_role;
+    }
+
+    public void setNamechange_cooldown(long namechange_cooldown) {
+        this.namechange_cooldown = namechange_cooldown;
+    }
+
+    public void setSearch_permission(boolean search_permission) {
+        this.search_permission = search_permission;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public void setDislikes(int dislikes) {
+        this.dislikes = dislikes;
+    }
+
+    public void setScore_to_award(int score_to_award) {
+        this.score_to_award = score_to_award;
+    }
+    
 }

@@ -34,5 +34,18 @@ public class PhoneNumber {
     public String toString() {
         return "PhoneNumber{" + "phone_number_id=" + phone_number_id + ", user_id=" + user_id + ", phone_number=" + phone_number + '}';
     }
+
+    public void setPhone_number_id(int phone_number_id) {
+        this.phone_number_id = phone_number_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
+    }
+    
     
 }

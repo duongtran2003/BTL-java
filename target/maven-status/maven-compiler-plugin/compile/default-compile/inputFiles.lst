@@ -3,6 +3,7 @@ D:\projects\java\BTL-java\src\main\java\controllers\product\editVoucher.java
 D:\projects\java\BTL-java\src\main\java\helper\JSONHelper.java
 D:\projects\java\BTL-java\src\main\java\dal\ProductDAO\VoucherDAO.java
 D:\projects\java\BTL-java\src\main\java\controllers\product\ReviewServlet.java
+D:\projects\java\BTL-java\src\main\java\controllers\user\ProcessLogin.java
 D:\projects\java\BTL-java\src\main\java\Model\Article\ReactionComment.java
 D:\projects\java\BTL-java\src\main\java\com\mycompany\btl\java\resources\JakartaEE10Resource.java
 D:\projects\java\BTL-java\src\main\java\com\mycompany\btl\java\JakartaRestConfiguration.java
@@ -41,6 +42,7 @@ D:\projects\java\BTL-java\src\main\java\controllers\product\editHasVoucher.java
 D:\projects\java\BTL-java\src\main\java\controllers\product\getOrderById.java
 D:\projects\java\BTL-java\src\main\java\dal\articleDAO\ReportDAO.java
 D:\projects\java\BTL-java\src\main\java\controllers\product\OperateWithHasVoucher.java
+D:\projects\java\BTL-java\src\main\java\controllers\user\ProcessChangeLikes.java
 D:\projects\java\BTL-java\src\main\java\controllers\article\ReactionArticleServlet.java
 D:\projects\java\BTL-java\src\main\java\dal\ProductDAO\OrderDAO.java
 D:\projects\java\BTL-java\src\main\java\controllers\article\CommentServlet.java
@@ -57,8 +59,12 @@ D:\projects\java\BTL-java\src\main\java\controllers\product\deleteReviewById.jav
 D:\projects\java\BTL-java\src\main\java\Model\Product\HasVoucher.java
 D:\projects\java\BTL-java\src\main\java\dal\UserDAO\UserDAO.java
 D:\projects\java\BTL-java\src\main\java\Model\Product\Review.java
+D:\projects\java\BTL-java\src\main\java\controllers\user\ProcessRegister.java
+D:\projects\java\BTL-java\src\main\java\controllers\user\ProcessChangePassword.java
 D:\projects\java\BTL-java\src\main\java\dal\ProductDAO\ProductOrderDAO.java
 D:\projects\java\BTL-java\src\main\java\controllers\product\deleteHasVoucherById.java
 D:\projects\java\BTL-java\src\main\java\dal\articleDAO\CommentDAO.java
+D:\projects\java\BTL-java\src\main\java\controllers\user\ProcessUpdateInformation.java
 D:\projects\java\BTL-java\src\main\java\controllers\product\getListReviewbyProductId.java
+D:\projects\java\BTL-java\src\main\java\controllers\user\ProcessChangeDislikes.java
 D:\projects\java\BTL-java\src\main\java\filter\article\CommentFilter.java

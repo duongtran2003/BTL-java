@@ -14,10 +14,12 @@ import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 // các hàm khả dụng
+//getByID(int Record_id) : tra ve ban ghi cua id
 // addObject(Object object) : 1 người dùng đăng kí tài khooản
 // updateObject(Object object) : người dùng sửa thông tin cá nhân của họ
 // deleteObject(int objectId) : người dùng xóa tài khoản của họ đồng thời xóa hết các bản ghi tại các  bảng tham chiếu tới (làm trong servlet)
 // getAllObjects() : trả về object user , trả về null nếu không có user tương ứng
+// de y permission va search viet sai chinh ta trong database
 public class UserDAO extends DAO {
     public UserDAO (){
         super();
@@ -62,6 +64,7 @@ public class UserDAO extends DAO {
             return null;
         }
     }
+
 
     @Override
     public boolean addObject(Object x) {
@@ -195,10 +198,10 @@ public class UserDAO extends DAO {
                 long login_cooldown_ = Long.parseLong(res.getString("login_cooldown")) ;
                 list.add((Object)new User( user_id_,  user_name_,  pass_word_,  full_name_,  date_of_birth_,  gender_,  country_,  city_,  district_,  detail_position_,  avatar_image_path_,  link_app_,  link_social_,  Favor_fc_,  description_text_,  uid_,  user_role_,  namechange_cooldown_,  search_permission_,  likes_,  dislikes_,  score_to_award_,  pass_word_latest_,  pass_word_latest_time_,  login_fail_,  login_cooldown_));
             }
-            if(list.size() == 0)return null;
+            if(list.size() == 0)return new ArrayList<Object> ();
             return list;
         } catch (Exception e) {
-            return null;
+            return new ArrayList<Object> ();
         }
     }
 }
