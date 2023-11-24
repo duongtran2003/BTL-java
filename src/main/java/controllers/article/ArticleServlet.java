@@ -8,8 +8,8 @@ package controllers.article;
 import Model.Article.Article;
 import Model.User.User;
 import com.google.gson.Gson;
-import dal.UserDAO.UserDAO;
 import dal.articleDAO.ArticleDAO;
+import dal.UserDAO.UserDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -45,6 +45,8 @@ public class ArticleServlet extends HttpServlet {
     
     // cập nhật số like, dislike của bài viết hoặc duyệt bài
     protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setHeader("Access-Control-Allow-Methods", "PATCH");
         StringBuilder json = (StringBuilder) req.getAttribute("json");
         
         ArticleDAO ad = new ArticleDAO();
@@ -92,12 +94,16 @@ public class ArticleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET");
         String id = request.getParameter("id"); //article_id
         String category = request.getParameter("category");
         String uncensored = request.getParameter("uncensored"); // bài chưa duyệt
         String sortBy = request.getParameter("sortBy"); // sắp xếp theo tiêu chí nào?
         String userId = request.getParameter("userId"); // lấy những bài viết của user theo thứ tự mới đến cũ
-        String featured = request.getParameter("featured"); // lấy nhưng bài viết nổi bật(>= 100 reactions, mới viết trong vòng 7 ngày)
+        String featured = request.getParameter("featured"); // lấy những bài viết nổi bật(>= 100 reactions, mới viết trong vòng 7 ngày)
+        String accepted = request.getParameter("accepted"); // lấy những bài viết đã duyệt
+        // không có parameter là lấy hết
         
         ArticleDAO ad = new ArticleDAO();
         Gson gson = new Gson();
@@ -130,6 +136,12 @@ public class ArticleServlet extends HttpServlet {
         else if (category != null) { // lấy bởi danh mục
             String criteria = "article_category = '" + category + "' and stt = 1";
             ArrayList<Article> arr = ad.getListArticle(criteria);
+            Collections.sort(arr, new Comparator<Article>() { // sắp xếp theo thứ tự thời gian gần nhất
+                @Override
+                public int compare(Article o1, Article o2) {
+                    return o2.getTimeAccept().compareTo(o1.getTimeAccept());
+                }   
+            });
             json = gson.toJson(arr);
         } 
         
@@ -185,8 +197,14 @@ public class ArticleServlet extends HttpServlet {
             json = gson.toJson(arr);
         } 
         
-        else { // lấy toàn bộ bài viết đã được duyệt
+        else if (accepted != null){ // lấy toàn bộ bài viết đã được duyệt
             String criteria = "stt = 1";
+            ArrayList<Article> arr = ad.getListArticle(criteria);
+            json = gson.toJson(arr);
+        }
+        
+        else {
+            String criteria = "1";
             ArrayList<Article> arr = ad.getListArticle(criteria);
             json = gson.toJson(arr);
         }
@@ -201,6 +219,8 @@ public class ArticleServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         try {
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Access-Control-Allow-Methods", "POST");
             StringBuilder json = (StringBuilder) request.getAttribute("json");
             
             JSONObject jsonObject = new JSONObject(json.toString());
@@ -243,6 +263,8 @@ public class ArticleServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "DELETE");
         response.setContentType("application/json"); 
         response.setCharacterEncoding("UTF-8");
         boolean ok = false;

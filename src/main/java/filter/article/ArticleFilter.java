@@ -10,8 +10,8 @@ package filter.article;
  */
 import Model.Article.Article;
 import Model.User.User;
-import dal.UserDAO.UserDAO;
 import dal.articleDAO.ArticleDAO;
+import dal.UserDAO.UserDAO;
 import java.io.IOException;
 
 import jakarta.servlet.Filter;
