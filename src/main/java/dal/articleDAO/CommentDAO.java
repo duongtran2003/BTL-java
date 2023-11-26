@@ -6,6 +6,8 @@ package dal.articleDAO;
 
 import Model.Article.Comment;
 import dal.DAO.DAO;
+
+import java.beans.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -56,6 +58,34 @@ public class CommentDAO extends DAO{
         } catch (SQLException e) {
 //            System.out.println(e);
             return false;
+        }
+    }
+
+    public int addComment(Object object) {
+
+        try {
+            Comment comment = (Comment)object;
+            String sql = "insert into comments(article_id, user_id, comment_content,"
+                    + " comment_time, likes, dislikes) value(?, ?, ?, ?, ?, ?)";
+            PreparedStatement st = con.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS);
+            st.setInt(1, comment.getArticleId());
+            st.setInt(2, comment.getUserId());
+            st.setString(3, comment.getCommentContent());
+            st.setTimestamp(4, comment.getCommentTime());
+            st.setInt(5, comment.getLikes());
+            st.setInt(6, comment.getDislikes());
+            st.executeUpdate();
+            ResultSet rs = st.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            else {
+                return -1;
+            }
+//            System.out.println("scs");
+        } catch (SQLException e) {
+//            System.out.println(e);
+            return -1;
         }
     }
 

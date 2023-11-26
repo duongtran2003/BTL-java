@@ -8,7 +8,6 @@ package controllers.product;
 import Model.Product.Voucher;
 import static common.product.Constant.URL_VOUCHER_GET_ALL_VOUCHER;
 import dal.ProductDAO.VoucherDAO;
-import helper.CORS;
 import helper.JSONHelper;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -30,7 +29,6 @@ public class getAllVoucher extends HttpServlet {
     // lấy ra tất cả voucher hiện có của shop
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CORS.disableCORS(resp, "get");
         Map<String, Object> res = new HashMap<> ();
         VoucherDAO voucherDAO=new VoucherDAO();
         List <Voucher> vouchers=voucherDAO.queryObjects();

@@ -18,7 +18,6 @@ import Model.User.User;
 import dal.ProductDAO.OrderDAO;
 import dal.ProductDAO.ProductDAO;
 import dal.UserDAO.UserDAO;
-import helper.CORS;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -45,7 +44,6 @@ public class processOrder extends HttpServlet {
 	protected void doPatch(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Map<String, Object> jsonMap = new JSONObject(JSONHelper.readJSON(request)).toMap();
 		Map<String, String> res = new HashMap<>();
-		CORS.disableCORS(response, "patch");
 		if (jsonMap.get("user_id") == null || jsonMap.get("user_id").toString().equals("")) {
 			res.put("message", "Bad request");
 			JSONHelper.sendJsonAsResponse(response, 400, res);

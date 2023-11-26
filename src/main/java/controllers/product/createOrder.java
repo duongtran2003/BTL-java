@@ -24,7 +24,6 @@ import dal.ProductDAO.OrderDAO;
 import dal.ProductDAO.ProductDAO;
 import dal.ProductDAO.ProductOrderDAO;
 import dal.ProductDAO.VoucherDAO;
-import helper.CORS;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -43,7 +42,6 @@ public class createOrder extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Map<String, Object> jsonMap = new JSONObject(JSONHelper.readJSON(request)).toMap();
-		CORS.disableCORS(response, "post");
 		// {
 		// "user_id": ,
 		// "products":
@@ -87,14 +85,14 @@ public class createOrder extends HttpServlet {
 			ProductDAO productDAO = new ProductDAO();
 			ProductOrderDAO productOrderDAO = new ProductOrderDAO();
 			if (order_id != -1) {
-				List<Map<String, String>> prodsInfo = (ArrayList<Map<String, String>>) jsonMap.get("products");
-				for (Map<String, String> prod : prodsInfo) {
-					int product_id = Integer.parseInt(prod.get("product_id"));
-					String nametag = prod.get("nametag");
-					String color = prod.get("color");
-					int size = Integer.parseInt(prod.get("size"));
-					int squad_number = Integer.parseInt(prod.get("squad_number"));
-					int quantity = Integer.parseInt(prod.get("quantity"));
+				List<Map<String, Object>> prodsInfo = (ArrayList<Map<String, Object>>) jsonMap.get("products");
+				for (Map<String, Object> prod : prodsInfo) {
+					int product_id = Integer.parseInt(prod.get("product_id").toString());
+					String nametag = prod.get("nametag").toString();
+					String color = prod.get("color").toString();
+					int size = Integer.parseInt(prod.get("size").toString());
+					int squad_number = Integer.parseInt(prod.get("squad_number").toString());
+					int quantity = Integer.parseInt(prod.get("quantity").toString());
 					Product newProd = (Product) productDAO.getById(product_id);
 					productOrderDAO.addObject(
 							new ProductOrder(0, newProd, order_id, nametag, color, size, squad_number, quantity));
@@ -105,7 +103,7 @@ public class createOrder extends HttpServlet {
 				return;
 			}
 		} catch (Exception e) {
-			res.put("message", "Bad request");
+			res.put("message", e.getMessage());
 			JSONHelper.sendJsonAsResponse(response, 400, res);
 			return;
 		}

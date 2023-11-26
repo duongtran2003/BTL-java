@@ -10,7 +10,6 @@ import Model.User.User;
 import static common.product.Constant.URL_HAS_VOUCHER_EDIT;
 import dal.ProductDAO.HasVoucherDAO;
 import dal.UserDAO.UserDAO;
-import helper.CORS;
 import helper.JSONHelper;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -46,32 +45,31 @@ public class editHasVoucher extends HttpServlet {
         }
     }
     protected void doPatch(HttpServletRequest request, HttpServletResponse response) throws IOException {
-                 CORS.disableCORS(response, "patch");
 		String jsonFromRequest = JSONHelper.readJSON(request);
 		JSONObject jSONObject= new JSONObject(jsonFromRequest);
 		Map<String, String> res = new HashMap<> ();
-		Cookie[] cookies = request.getCookies();
-                if (cookies == null) {
-                        res.put("message", "thieu cookie");
-                        JSONHelper.sendJsonAsResponse(response, 400, res);
-                }
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("user_id")) {
-                        int user_id = Integer.parseInt(cookie.getValue());
-                        User currentUser = (User) userDAO.getById(user_id);
-                        if (currentUser == null) {
-                                res.put("message", "wrong user id");
-                                JSONHelper.sendJsonAsResponse(response, 400, res);
-                                return;
-                        }
-                        if (currentUser.getUser_role() != 2) {
-                                res.put("message", "ko phai admin");
-                                JSONHelper.sendJsonAsResponse(response, 401, res);
-                                return;
-                        }
-                        break;
-                    }
-                }
+		// Cookie[] cookies = request.getCookies();
+        //         if (cookies == null) {
+        //                 res.put("message", "thieu cookie");
+        //                 JSONHelper.sendJsonAsResponse(response, 400, res);
+        //         }
+        //         for (Cookie cookie : cookies) {
+        //             if (cookie.getName().equals("user_id")) {
+        //                 int user_id = Integer.parseInt(cookie.getValue());
+        //                 User currentUser = (User) userDAO.getById(user_id);
+        //                 if (currentUser == null) {
+        //                         res.put("message", "wrong user id");
+        //                         JSONHelper.sendJsonAsResponse(response, 400, res);
+        //                         return;
+        //                 }
+        //                 if (currentUser.getUser_role() != 2) {
+        //                         res.put("message", "ko phai admin");
+        //                         JSONHelper.sendJsonAsResponse(response, 401, res);
+        //                         return;
+        //                 }
+        //                 break;
+        //             }
+        //         }
                 try {
                     if (jSONObject.get("has_voucher_id") == null && jSONObject.get("has_voucher_id").toString().trim().equals("")) {
 			res.put("message", "bad request, json khong co id");

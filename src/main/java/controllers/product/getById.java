@@ -12,7 +12,6 @@ import com.google.gson.Gson;
 
 import Model.Product.Product;
 import dal.ProductDAO.ProductDAO;
-import helper.CORS;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -49,7 +48,6 @@ public class getById extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		CORS.disableCORS(response, "get");
 		String id = request.getPathInfo().substring(1);
 		Map<String, Object> res = new HashMap<String, Object>();
 		try {

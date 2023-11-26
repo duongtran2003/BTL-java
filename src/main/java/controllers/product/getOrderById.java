@@ -12,7 +12,6 @@ import java.util.Map;
 
 import Model.Product.Order;
 import dal.ProductDAO.OrderDAO;
-import helper.CORS;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -32,27 +31,26 @@ public class getOrderById extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String id = request.getPathInfo().substring(1);
-		CORS.disableCORS(response, "get");
 		Map<String, Object> res = new HashMap<String, Object>();
 		try {
 			OrderDAO orderDao = new OrderDAO();
-			Cookie[] cookies = request.getCookies();
-			if (cookies == null) {
-				res.put("message", "thieu cookie");
-				JSONHelper.sendJsonAsResponse(response, 400, res);
-			}
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("user_id")) {
-					int user_id = Integer.parseInt(cookie.getValue());
-					List<Order> orders = orderDao.getByUserId(user_id);
-					if (orders == null || orders.size() == 0) {
-						res.put("message", "ko phai order cua ban");
-						JSONHelper.sendJsonAsResponse(response, 401, res);
-						return;
-					}
-					break;
-				}
-			}
+			// Cookie[] cookies = request.getCookies();
+			// if (cookies == null) {
+			// 	res.put("message", "thieu cookie");
+			// 	JSONHelper.sendJsonAsResponse(response, 400, res);
+			// }
+			// for (Cookie cookie : cookies) {
+			// 	if (cookie.getName().equals("user_id")) {
+			// 		int user_id = Integer.parseInt(cookie.getValue());
+			// 		List<Order> orders = orderDao.getByUserId(user_id);
+			// 		if (orders == null || orders.size() == 0) {
+			// 			res.put("message", "ko phai order cua ban");
+			// 			JSONHelper.sendJsonAsResponse(response, 401, res);
+			// 			return;
+			// 		}
+			// 		break;
+			// 	}
+			// }
 			int _id = Integer.parseInt(id);
 			Order order = (Order) orderDao.getById(_id);
 			JSONHelper.sendJsonAsResponse(response, 200, order);

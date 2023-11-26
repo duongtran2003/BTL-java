@@ -6,7 +6,6 @@ import Model.User.User;
 import static common.product.Constant.URL_REVIEW_DELETE_BY_ID;
 import dal.ProductDAO.ReviewDAO;
 import dal.UserDAO.UserDAO;
-import helper.CORS;
 import helper.JSONHelper;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -30,32 +29,31 @@ public class deleteReviewById extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map<String, Object> res = new HashMap<> ();
-        UserDAO userDAO=new UserDAO();
-        CORS.disableCORS(resp, "delete");
+        // UserDAO userDAO=new UserDAO();
         int id = Integer.parseInt(req.getPathInfo().substring(1));
         try {
-            Cookie[] cookies = req.getCookies();
-            if (cookies == null) {
-                    res.put("message", "thieu cookie");
-                    JSONHelper.sendJsonAsResponse(resp, 400, res);
-            }
-            for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("user_id")) {
-                            int user_id = Integer.parseInt(cookie.getValue());
-                            User currentUser = (User) userDAO.getById(user_id);
-                            if (currentUser == null) {
-                                    res.put("message", "wrong user id");
-                                    JSONHelper.sendJsonAsResponse(resp, 400, res);
-                                    return;
-                            }
-                            if (currentUser.getUser_role() != 2) {
-                                    res.put("message", "ko phai admin");
-                                    JSONHelper.sendJsonAsResponse(resp, 401, res);
-                                    return;
-                            }
-                            break;
-                    }
-            }
+        //     Cookie[] cookies = req.getCookies();
+        //     if (cookies == null) {
+        //             res.put("message", "thieu cookie");
+        //             JSONHelper.sendJsonAsResponse(resp, 400, res);
+        //     }
+        //     for (Cookie cookie : cookies) {
+        //             if (cookie.getName().equals("user_id")) {
+        //                     int user_id = Integer.parseInt(cookie.getValue());
+        //                     User currentUser = (User) userDAO.getById(user_id);
+        //                     if (currentUser == null) {
+        //                             res.put("message", "wrong user id");
+        //                             JSONHelper.sendJsonAsResponse(resp, 400, res);
+        //                             return;
+        //                     }
+        //                     if (currentUser.getUser_role() != 2) {
+        //                             res.put("message", "ko phai admin");
+        //                             JSONHelper.sendJsonAsResponse(resp, 401, res);
+        //                             return;
+        //                     }
+        //                     break;
+        //             }
+        //     }
             boolean isSuccess = reviewDAO.deleteObject(id);
             if (isSuccess) {
                     res.put("message", "Success");	

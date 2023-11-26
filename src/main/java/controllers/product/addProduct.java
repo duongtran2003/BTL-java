@@ -15,7 +15,6 @@ import Model.Product.Product;
 import Model.User.User;
 import dal.ProductDAO.ProductDAO;
 import dal.UserDAO.UserDAO;
-import helper.CORS;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -34,7 +33,6 @@ public class addProduct extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		CORS.disableCORS(response, "post");
 		Map<String, Object> jsonMap = new JSONObject(JSONHelper.readJSON(request)).toMap();
 		ProductDAO prodDao = new ProductDAO();
 		String productName = "";
@@ -48,25 +46,30 @@ public class addProduct extends HttpServlet {
 		int discounted = 0;
 		Map<String, Object> res = new HashMap<>();
 		try {
-			Cookie[] cookies = request.getCookies();
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("user_id")) {
-					int user_id = Integer.parseInt(cookie.getValue());
-					UserDAO userDAO = new UserDAO();
-					User currentUser = (User) userDAO.getById(user_id);
-					if (currentUser == null) {
-						res.put("message", "wrong user id");
-						JSONHelper.sendJsonAsResponse(response, 400, res);
-						return;
-					}
-					if (currentUser.getUser_role() != 2) {
-						res.put("message", "ko phai admin");
-						JSONHelper.sendJsonAsResponse(response, 401, res);
-						return;
-					}
-					break;
-				}
-			}
+			// Cookie[] cookies = request.getCookies();
+			// if (cookies == null) {
+			// 	res.put("message", "thieu cookie");
+			// 	JSONHelper.sendJsonAsResponse(response, 401, res);
+			// 	return;
+			// }
+			// for (Cookie cookie : cookies) {
+			// 	if (cookie.getName().equals("user_id")) {
+			// 		int user_id = Integer.parseInt(cookie.getValue().toString());
+			// 		UserDAO userDAO = new UserDAO();
+			// 		User currentUser = (User) userDAO.getById(user_id);
+			// 		if (currentUser == null) {
+			// 			res.put("message", "wrong user id");
+			// 			JSONHelper.sendJsonAsResponse(response, 400, res);
+			// 			return;
+			// 		}
+			// 		if (currentUser.getUser_role() != 2) {
+			// 			res.put("message", "ko phai admin");
+			// 			JSONHelper.sendJsonAsResponse(response, 401, res);
+			// 			return;
+			// 		}
+			// 		break;
+			// 	}
+			// }
 			productName = jsonMap.get("product_name").toString();
 			if (jsonMap.get("category").toString().equals("1")) {
 				category = true;
@@ -82,8 +85,9 @@ public class addProduct extends HttpServlet {
 			sold = 0;
 			discounted = Integer.parseInt(jsonMap.get("discounted").toString());
 		} catch (Exception e) {
-			res.put("message", "bad request, thieu field");
+			res.put("message",e.getMessage());
 			JSONHelper.sendJsonAsResponse(response, 400, res);
+			return;
 		}
 		Product newProd = new Product(0, productName, category, imagePath, team, price, rating, sold, discounted,
 				totalRatingTime);

@@ -90,15 +90,15 @@ public class UserDAO extends DAO {
             stm.setString(15, a.getDescription_text());
             stm.setString(16, a.getUid());
             stm.setInt(17,   a.getUser_role());
-            if(a.isSearch_permission()) stm.setBoolean(18, true);
-            else stm.setBoolean(18,false);
-            stm.setInt(19, a.getLikes());
-            stm.setInt(20,   a.getDislikes());
-            stm.setInt(21,   a.getScore_to_award());
-            stm.setInt(22,a.getPass_word_latest());
-            stm.setLong(23, a.getPass_word_latest_time());
-            stm.setInt(24,  a.getLogin_fail());
-            stm.setLong(25, a.getNamechange_cooldown());
+            if(a.isSearch_permission()) stm.setBoolean(19, true);
+            else stm.setBoolean(19,false);
+            stm.setInt(20, a.getLikes());
+            stm.setInt(21,   a.getDislikes());
+            stm.setInt(22,   a.getScore_to_award());
+            stm.setInt(23,a.getPass_word_latest());
+            stm.setLong(24, a.getPass_word_latest_time());
+            stm.setInt(25,  a.getLogin_fail());
+            stm.setLong(18, a.getNamechange_cooldown());
             stm.setLong(26,  a.getLogin_cooldown());
             return stm.executeUpdate() > 0 ;
         } catch (Exception e) {

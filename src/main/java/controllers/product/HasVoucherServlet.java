@@ -14,7 +14,6 @@ import static common.product.Constant.URL_HAS_VOUCHER_POST_AND_GET;
 import dal.ProductDAO.HasVoucherDAO;
 import dal.ProductDAO.VoucherDAO;
 import dal.UserDAO.UserDAO;
-import helper.CORS;
 import helper.JSONHelper;
 import jakarta.servlet.http.Cookie;
 import java.util.*;
@@ -38,27 +37,26 @@ public class HasVoucherServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         Map<String, Object> res = new HashMap<> ();
-        CORS.disableCORS(response, "post");
         try{
             JSONObject jsonObject = new JSONObject(JSONHelper.readJSON(request));
-            Cookie[] cookies = request.getCookies();
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("user_id")) {
-                    int user_id = Integer.parseInt(cookie.getValue());
-                    User currentUser = (User) userDAO.getById(user_id);
-                    if (currentUser == null) {
-                            res.put("message", "wrong user id");
-                            JSONHelper.sendJsonAsResponse(response, 400, res);
-                            return;
-                    }
-                    if (currentUser.getUser_role() != 2) {
-                            res.put("message", "ko phai admin");
-                            JSONHelper.sendJsonAsResponse(response, 401, res);
-                            return;
-                    }
-                    break;
-                }
-            }
+            // Cookie[] cookies = request.getCookies();
+            // for (Cookie cookie : cookies) {
+            //     if (cookie.getName().equals("user_id")) {
+            //         int user_id = Integer.parseInt(cookie.getValue());
+            //         User currentUser = (User) userDAO.getById(user_id);
+            //         if (currentUser == null) {
+            //                 res.put("message", "wrong user id");
+            //                 JSONHelper.sendJsonAsResponse(response, 400, res);
+            //                 return;
+            //         }
+            //         if (currentUser.getUser_role() != 2) {
+            //                 res.put("message", "ko phai admin");
+            //                 JSONHelper.sendJsonAsResponse(response, 401, res);
+            //                 return;
+            //         }
+            //         break;
+            //     }
+            // }
             int user_id=Integer.parseInt(jsonObject.get("user_id").toString());
             int voucher_id=Integer.parseInt(jsonObject.get("voucher_id").toString());
             Voucher voucher=(Voucher) voucherDAO.getById(voucher_id);
@@ -91,7 +89,6 @@ public class HasVoucherServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map<String, Object> res = new HashMap<> ();
-        CORS.disableCORS(resp, "get");
         try {
             int id=Integer.parseInt(req.getParameter("has_voucher_id"));
             Object check =  hasVoucherDAO.getById(id);

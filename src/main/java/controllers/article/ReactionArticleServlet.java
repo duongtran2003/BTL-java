@@ -8,6 +8,7 @@ package controllers.article;
 import Model.Article.ReactionArticle;
 import com.google.gson.Gson;
 import dal.articleDAO.ReactionArticleDAO;
+
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -102,8 +103,9 @@ public class ReactionArticleServlet extends HttpServlet {
         
         if (!ok) {
             try { // xóa 1 reactionArticle theo id
-                JSONObject jsonObject = new JSONObject(json.toString());
-                int reactionId = jsonObject.getInt("reactionArticleId");
+                // JSONObject jsonObject = new JSONObject(json.toString());
+                // int reactionId = jsonObject.getInt("reactionArticleId");
+                int reactionId = Integer.parseInt(req.getParameter("reactionArticleId"));
                 rad.deleteObject(reactionId);
                 ok = true;
                 resp.getWriter().write("{\"message\": \"1\"}");
@@ -114,8 +116,8 @@ public class ReactionArticleServlet extends HttpServlet {
         if (!ok) {
             try { // xóa 1 reactionArticle theo userId và articleId
                 JSONObject jsonObject = new JSONObject(json.toString());
-                int articleId = jsonObject.getInt("articleId");
-                int userId = jsonObject.getInt("userId");
+                int articleId = Integer.parseInt(req.getParameter("articleId"));
+                int userId = Integer.parseInt(req.getParameter("userId"));
                 rad.deleteRAByCriteria("article_id = " + articleId + " and user_id = " + userId);
                 ok = true;
                 resp.getWriter().write("{\"message\": \"2\"}");
@@ -126,7 +128,7 @@ public class ReactionArticleServlet extends HttpServlet {
         if (!ok) {
             try { // xóa list reactionArticle theo articleId
                 JSONObject jsonObject = new JSONObject(json.toString());
-                int articleId = jsonObject.getInt("articleId");
+                int articleId = Integer.parseInt(req.getParameter("articleId"));
                 rad.deleteRAByCriteria("article_id = " + articleId);
                 ok = true;
                 resp.getWriter().write("{\"message\": \"3\"}");
@@ -137,7 +139,7 @@ public class ReactionArticleServlet extends HttpServlet {
         if (!ok) {
             try { // xóa list reactionArticle theo userId
                 JSONObject jsonObject = new JSONObject(json.toString());
-                int userId = jsonObject.getInt("userId");
+                int userId = Integer.parseInt(req.getParameter("userId"));
                 rad.deleteRAByCriteria("user_id = " + userId);
                 ok = true;
                 resp.getWriter().write("{\"message\": \"4\"}");

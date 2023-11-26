@@ -40,11 +40,12 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
         response.setContentType("text/html;charset=UTF-8");
         
     } 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
-    }
+    // @Override
+    // protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    // throws ServletException, IOException {
+    //     CORS.disableCORS(response, "post");
+    //     processRequest(request, response);
+    // }
     private boolean checkCharacter(Character c){
         int x = c + 0;
         if(x >= 48 && x <= 57)return true;
@@ -64,9 +65,14 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
         if(passWord.length() >15 || passWord.length() < 5)list.add("Size of password is between 5 and 15") ;
         return list ;
     }
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        // CORS.disableCORS(response, "post");
+        if ("OPTIONS".equals(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_ACCEPTED);
+        }
         // Đọc dữ liệu JSON từ request
         try {
             BufferedReader reader = request.getReader();
@@ -76,7 +82,6 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
                 json.append(line);
             }
            reader.close();
-           response.addHeader("Access-Control-Allow-Origin", "*");
            response.setContentType("application/json");
            response.setCharacterEncoding("UTF-8");
             // Sử dụng Gson để chuyển đổi JSON thành đối tượng Java
@@ -155,6 +160,8 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
                         }
                    }//end else
                    }
+        //    response.getWriter().write(message);
+            
            response.getWriter().write(message);
         }
         catch (Exception e) {

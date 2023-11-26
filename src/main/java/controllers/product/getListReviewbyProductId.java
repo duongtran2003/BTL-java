@@ -8,7 +8,6 @@ package controllers.product;
 import Model.Product.Review;
 import static common.product.Constant.URL_LIST_REVIEW_GET_BY_PRODUCT_ID;
 import dal.ProductDAO.ReviewDAO;
-import helper.CORS;
 import helper.JSONHelper;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -33,7 +32,6 @@ public class getListReviewbyProductId extends HttpServlet {
     private ReviewDAO reviewDAO=new ReviewDAO();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException { 
-        CORS.disableCORS(resp, "get");
         Map<String, Object> res = new HashMap<> ();
         try {
             int id = Integer.parseInt(req.getPathInfo().substring(1));

@@ -132,7 +132,6 @@ public class ProcessRegister extends HttpServlet {
                 json.append(line);
             }
             reader.close();
-           response.addHeader("Access-Control-Allow-Origin", "*");
            response.setContentType("application/json");
            response.setCharacterEncoding("UTF-8");
             // Sử dụng Gson để chuyển đổi JSON thành đối tượng Java

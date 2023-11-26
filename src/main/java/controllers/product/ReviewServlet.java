@@ -12,7 +12,6 @@ import dal.ProductDAO.ReviewDAO;
 import Model.Product.Review;
 import dal.ProductDAO.OrderDAO;
 import dal.ProductDAO.ProductDAO;
-import helper.CORS;
 import helper.JSONHelper;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -39,7 +38,6 @@ public class ReviewServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map<String, Object> res = new HashMap<>();
-        CORS.disableCORS(resp, "get");
         try {
             int id = Integer.parseInt(req.getParameter("review_id"));
             Object check = reviewDAO.getById(id);
@@ -62,7 +60,6 @@ public class ReviewServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Map<String, Object> res = new HashMap<>();
-        CORS.disableCORS(response, "post");
         try {
             JSONObject jsonObject = new JSONObject(JSONHelper.readJSON(request));
             int user_id = Integer.parseInt(jsonObject.get("user_id").toString());

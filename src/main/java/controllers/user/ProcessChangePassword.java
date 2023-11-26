@@ -6,6 +6,7 @@ package controllers.user;
 
 import Model.User.User;
 import dal.UserDAO.UserDAO;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -66,7 +67,6 @@ public class ProcessChangePassword extends HttpServlet {
                 json.append(line);
             }
            reader.close();
-           response.addHeader("Access-Control-Allow-Origin", "*");
            response.setContentType("application/json");
            response.setCharacterEncoding("UTF-8");
            JSONObject yourdata = new JSONObject(json.toString());

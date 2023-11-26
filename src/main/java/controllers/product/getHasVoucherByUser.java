@@ -8,7 +8,6 @@ package controllers.product;
 import Model.Product.HasVoucher;
 import static common.product.Constant.URL_HAS_VOUCHER_GET_BY_USER;
 import dal.ProductDAO.HasVoucherDAO;
-import helper.CORS;
 import helper.JSONHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,7 +31,6 @@ public class getHasVoucherByUser extends HttpServlet {
     private HasVoucherDAO hasVoucherDAO=new HasVoucherDAO();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CORS.disableCORS(resp, "get");
         Map<String, Object> res = new HashMap<> ();
         try {
             int id = Integer.parseInt(req.getPathInfo().substring(1));

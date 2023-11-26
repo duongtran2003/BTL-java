@@ -33,7 +33,6 @@ public class JSONHelper {
     }
 
     public static void sendJsonAsResponse(HttpServletResponse response, int statusCode, Object payload) throws IOException {
-        response.addHeader("Access-Control-Allow-Origin", "*");
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         String json = new Gson().toJson(payload);

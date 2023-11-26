@@ -14,7 +14,6 @@ import java.util.Map;
 import com.google.gson.Gson;
 import org.json.JSONObject;
 
-import helper.CORS;
 import helper.JSONHelper;
 
 import jakarta.servlet.ServletException;
@@ -58,7 +57,6 @@ public class index extends HttpServlet {
 		//category: 0 - ao, 1 - giay
 
 		ProductDAO prodDao = new ProductDAO();
-		CORS.disableCORS(response, "post");
 		String jsonFromRequest = JSONHelper.readJSON(request);
 		Map<String, Object> filter = new JSONObject(jsonFromRequest).toMap();	
 		List<Product> prods = prodDao.queryObjects(filter);	

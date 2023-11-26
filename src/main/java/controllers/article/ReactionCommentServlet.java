@@ -10,6 +10,7 @@ import Model.Article.ReactionComment;
 import com.google.gson.Gson;
 import dal.articleDAO.CommentDAO;
 import dal.articleDAO.ReactionCommentDAO;
+
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -118,7 +119,7 @@ public class ReactionCommentServlet extends HttpServlet {
         if (!ok) {
             try { // xóa 1 reactionComment theo id
                 JSONObject jsonObject = new JSONObject(json.toString());
-                int reactionId = jsonObject.getInt("reactionCommentId");
+                int reactionId = Integer.parseInt(req.getParameter("reactionCommentId"));
                 rcd.deleteObject(reactionId);
                 ok = true;
                 resp.getWriter().write("{\"message\": \"1\"}");
@@ -129,8 +130,8 @@ public class ReactionCommentServlet extends HttpServlet {
         if (!ok) {
             try { // xóa 1 reactionComment userId và commentId
                 JSONObject jsonObject = new JSONObject(json.toString());
-                int commentId = jsonObject.getInt("commentId");
-                int userId = jsonObject.getInt("userId");
+                int commentId = Integer.parseInt(req.getParameter("commentId"));
+                int userId = Integer.parseInt(req.getParameter("userId"));
                 String criteria = "comment_id = " + commentId + " and user_id = " + userId;
                 rcd.deleteListRC(criteria);
                 ok = true;
@@ -142,7 +143,7 @@ public class ReactionCommentServlet extends HttpServlet {
         if (!ok) {
             try { // xóa 1 list rc theo comment
                 JSONObject jsonObject = new JSONObject(json.toString());
-                int commentId = jsonObject.getInt("commentId");
+                int commentId = Integer.parseInt("commentId");
                 String criteria = "comment_id = " + commentId;
                 rcd.deleteListRC(criteria);
                 ok = true;
@@ -154,7 +155,7 @@ public class ReactionCommentServlet extends HttpServlet {
         if (!ok) {
             try { // xóa 1 list rc theo user
                 JSONObject jsonObject = new JSONObject(json.toString());
-                int userId = jsonObject.getInt("userId");
+                int userId = Integer.parseInt(req.getParameter("userId"));
                 String criteria = "user_id = " + userId;
                 rcd.deleteListRC(criteria);
                 ok = true;
@@ -166,7 +167,7 @@ public class ReactionCommentServlet extends HttpServlet {
         if (!ok) {
             try { // xóa 1 list rc theo article
                 JSONObject jsonObject = new JSONObject(json.toString());
-                int articleId = jsonObject.getInt("articleId");
+                int articleId = Integer.parseInt(req.getParameter("articleId"));
                 CommentDAO cd = new CommentDAO();
                 String criteria = "article_id = " + articleId;
                 ArrayList<Comment> listCmt = cd.getListComment(criteria);

@@ -15,7 +15,6 @@ import Model.Product.Product;
 import Model.User.User;
 import dal.ProductDAO.ProductDAO;
 import dal.UserDAO.UserDAO;
-import helper.CORS;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -62,7 +61,6 @@ public class editProduct extends HttpServlet {
 	 */
 	protected void doPatch(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String jsonFromRequest = JSONHelper.readJSON(request);
-		CORS.disableCORS(response, "patch");
 		Map<String, Object> fields = new JSONObject(jsonFromRequest).toMap();
 		Map<String, String> res = new HashMap<>();
 		if (fields.get("product_id") == null && fields.get("product_id").toString().trim().equals("")) {
@@ -70,29 +68,29 @@ public class editProduct extends HttpServlet {
 			JSONHelper.sendJsonAsResponse(response, 400, res);
 			return;
 		}
-		Cookie[] cookies = request.getCookies();
-		for (Cookie cookie : cookies) {
-			if (cookie.getName().equals("user_id")) {
-				int user_id = Integer.parseInt(cookie.getValue());
-				UserDAO userDAO = new UserDAO();
-				User currentUser = (User) userDAO.getById(user_id);
-				if (cookies == null) {
-					res.put("message", "thieu cookie");
-					JSONHelper.sendJsonAsResponse(response, 400, res);
-				}
-				if (currentUser == null) {
-					res.put("message", "wrong user id");
-					JSONHelper.sendJsonAsResponse(response, 400, res);
-					return;
-				}
-				if (currentUser.getUser_role() != 2) {
-					res.put("message", "ko phai admin");
-					JSONHelper.sendJsonAsResponse(response, 401, res);
-					return;
-				}
-				break;
-			}
-		}
+		// Cookie[] cookies = request.getCookies();
+		// if (cookies == null) {
+		// 	res.put("message", "thieu cookie");
+		// 	JSONHelper.sendJsonAsResponse(response, 400, res);
+		// }
+		// for (Cookie cookie : cookies) {
+		// 	if (cookie.getName().equals("user_id")) {
+		// 		int user_id = Integer.parseInt(cookie.getValue());
+		// 		UserDAO userDAO = new UserDAO();
+		// 		User currentUser = (User) userDAO.getById(user_id);
+		// 		if (currentUser == null) {
+		// 			res.put("message", "wrong user id");
+		// 			JSONHelper.sendJsonAsResponse(response, 400, res);
+		// 			return;
+		// 		}
+		// 		if (currentUser.getUser_role() != 2) {
+		// 			res.put("message", "ko phai admin");
+		// 			JSONHelper.sendJsonAsResponse(response, 401, res);
+		// 			return;
+		// 		}
+		// 		break;
+		// 	}
+		// }
 		ProductDAO prodDao = new ProductDAO();
 		try {
 			Product oldProd = (Product) prodDao.getById(Integer.parseInt(fields.get("product_id").toString()));

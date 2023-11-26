@@ -8,6 +8,9 @@ package controllers.article;
 import Model.Article.Comment;
 import com.google.gson.Gson;
 import dal.articleDAO.CommentDAO;
+import helper.JSONHelper;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -105,7 +108,13 @@ public class CommentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         try {
-            StringBuilder json = (StringBuilder) request.getAttribute("json");
+            // StringBuilder json = (StringBuilder) request.getAttribute("json");
+            BufferedReader reader = request.getReader();
+            StringBuilder json = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                json.append(line);
+            }
             JSONObject jsonObject = new JSONObject(json.toString());
             int userId = jsonObject.getInt("userId");
             int articleId = jsonObject.getInt("articleId");
@@ -114,19 +123,22 @@ public class CommentServlet extends HttpServlet {
             
             Comment cmt = new Comment(0, 0, 0, commentContent, now, articleId, userId);
             CommentDAO cd = new CommentDAO();
-            cd.addObject(cmt);
-
-            String jsonString = "{\"message\": \"comment successfully\"}";
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(jsonString);
+            int newId = cd.addComment(cmt);
+            Comment newComment = (Comment) cd.getById(newId);
+            JSONHelper.sendJsonAsResponse(response, 200, newComment);
         } catch (JSONException ex) {
         }
     }
     
     // cập nhật số like, dislike của comment
     protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        StringBuilder json = (StringBuilder) req.getAttribute("json");
+        // StringBuilder json = (StringBuilder) req.getAttribute("json");BufferedReader reader = request.getReader();
+        BufferedReader reader = req.getReader();
+        StringBuilder json = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            json.append(line);
+        }
         Gson gson = new Gson();
         String jsonString = "";
         try {
@@ -152,14 +164,14 @@ public class CommentServlet extends HttpServlet {
     // xóa cmt
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        StringBuilder json = (StringBuilder) req.getAttribute("json");
+        // StringBuilder json = (StringBuilder) req.getAttribute("json");
         Gson gson = new Gson();
         String jsonString = "";
         boolean ok = false;
         if (!ok) {
             try { // có người ấn nút xóa
-                JSONObject jsonObject = new JSONObject(json.toString());
-                int commentId = jsonObject.getInt("commentId");
+                // JSONObject jsonObject = new JSONObject(json.toString());
+                int commentId = Integer.parseInt(req.getParameter("commentId"));
                 CommentDAO cd = new CommentDAO();
                 cd.deleteObject(commentId);
                 ok = true;
@@ -170,9 +182,9 @@ public class CommentServlet extends HttpServlet {
         
         if (!ok) {
             try { // xóa theo article
-                JSONObject jsonObject = new JSONObject(json.toString());
-                boolean byArticle = jsonObject.getBoolean("byArticle");
-                int articleId = jsonObject.getInt("articleId");
+                // JSONObject jsonObject = new JSONObject(json.toString());
+                boolean byArticle = Boolean.parseBoolean(req.getParameter("byArticle"));
+                int articleId = Integer.parseInt(req.getParameter("articleId"));
                 CommentDAO cd = new CommentDAO();
                 cd.deleteByArticleId(articleId);
                 ok = true;
@@ -183,9 +195,9 @@ public class CommentServlet extends HttpServlet {
         
         if (!ok) {
             try { // xóa theo user
-                JSONObject jsonObject = new JSONObject(json.toString());
-                boolean byUser = jsonObject.getBoolean("byUser");
-                int userId = jsonObject.getInt("userId");
+                // JSONObject jsonObject = new JSONObject(json.toString());
+                boolean byUser = Boolean.parseBoolean(req.getParameter("byUser"));
+                int userId = Integer.parseInt(req.getParameter("userId"));
                 CommentDAO cd = new CommentDAO();
                 cd.deleteByUserId(userId);
                 ok = true;
