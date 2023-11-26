@@ -24,12 +24,12 @@ import org.json.JSONObject;
  *
  * @author DELL
  */
-@WebServlet(name="ReactionArticleServlet", urlPatterns={"/reaction_article"})
+@WebServlet(name = "ReactionArticleServlet", urlPatterns = { "/reaction_article" })
 public class ReactionArticleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.setContentType("application/json"); 
+            throws ServletException, IOException {
+        response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         ReactionArticleDAO rad = new ReactionArticleDAO();
         String json = "";
@@ -37,35 +37,35 @@ public class ReactionArticleServlet extends HttpServlet {
         String reactionArticleId = request.getParameter("reactionArticleId");
         String userId = request.getParameter("userId");
         String articleId = request.getParameter("articleId");
-        
+
         if (reactionArticleId != null) { // Lấy ra reactionAritcle theo id
             ReactionArticle ra = (ReactionArticle) rad.getById(Integer.parseInt(reactionArticleId));
             json = gson.toJson(ra);
-        } 
-        
+        }
+
         else if (articleId != null && userId != null) { // Lấy ra reactionAritcle theo user và article
             ReactionArticle ra = rad.getByArticleAndUser(Integer.parseInt(articleId), Integer.parseInt(userId));
             json = gson.toJson(ra);
-        } 
-        
+        }
+
         else if (articleId != null) { // Lấy ra list reactionAritcle article
             String criteria = "article_id = " + articleId;
             ArrayList<ReactionArticle> list = rad.getListRA(criteria);
             json = gson.toJson(list);
-        } 
-        
+        }
+
         else if (userId != null) { // Lấy ra list reactionAritcle user
             String criteria = "user_id = " + userId;
             ArrayList<ReactionArticle> list = rad.getListRA(criteria);
             json = gson.toJson(list);
         }
         response.getWriter().write(json);
-    } 
-    
+    }
+
     // tạo 1 reactionArticle mới
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         BufferedReader reader = request.getReader();
         StringBuilder json = new StringBuilder();
         String line;
@@ -80,7 +80,7 @@ public class ReactionArticleServlet extends HttpServlet {
             ReactionArticleDAO rad = new ReactionArticleDAO();
             ReactionArticle ra = new ReactionArticle(0, reactionType, userId, articleId);
             rad.addObject(ra);
-            response.setContentType("application/json"); 
+            response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write("{\"message\": \"Post reactionArticle successfully!\"}");
         } catch (JSONException ex) {
@@ -89,10 +89,10 @@ public class ReactionArticleServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application/json"); 
+        resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         ReactionArticleDAO rad = new ReactionArticleDAO();
-        
+
         BufferedReader reader = req.getReader();
         StringBuilder json = new StringBuilder();
         String line;
@@ -100,51 +100,49 @@ public class ReactionArticleServlet extends HttpServlet {
         while ((line = reader.readLine()) != null) {
             json.append(line);
         }
-        
-        if (!ok) {
+
+        String reactionId = req.getParameter("reactionArticleId");
+        String articleId = req.getParameter("articleId");
+        String userId = req.getParameter("userId");
+        if (!ok && reactionId != null) {
             try { // xóa 1 reactionArticle theo id
-                // JSONObject jsonObject = new JSONObject(json.toString());
-                // int reactionId = jsonObject.getInt("reactionArticleId");
-                int reactionId = Integer.parseInt(req.getParameter("reactionArticleId"));
-                rad.deleteObject(reactionId);
+                  // JSONObject jsonObject = new JSONObject(json.toString());
+                  // int reactionId = jsonObject.getInt("reactionArticleId");
+                rad.deleteObject(Integer.parseInt(reactionId));
                 ok = true;
                 resp.getWriter().write("{\"message\": \"1\"}");
             } catch (JSONException ex) {
             }
         }
-        
-        if (!ok) {
+
+        if (!ok && userId != null && articleId != null) {
             try { // xóa 1 reactionArticle theo userId và articleId
-                JSONObject jsonObject = new JSONObject(json.toString());
-                int articleId = Integer.parseInt(req.getParameter("articleId"));
-                int userId = Integer.parseInt(req.getParameter("userId"));
-                rad.deleteRAByCriteria("article_id = " + articleId + " and user_id = " + userId);
+                  // JSONObject jsonObject = new JSONObject(json.toString());
+                rad.deleteRAByCriteria("article_id = " + Integer.parseInt(articleId) + " and user_id = " + Integer.parseInt(userId));
                 ok = true;
                 resp.getWriter().write("{\"message\": \"2\"}");
             } catch (JSONException ex) {
             }
         }
-        
-        if (!ok) {
+
+        if (!ok && articleId != null) {
             try { // xóa list reactionArticle theo articleId
-                JSONObject jsonObject = new JSONObject(json.toString());
-                int articleId = Integer.parseInt(req.getParameter("articleId"));
-                rad.deleteRAByCriteria("article_id = " + articleId);
+                  // JSONObject jsonObject = new JSONObject(json.toString());
+                rad.deleteRAByCriteria("article_id = " + Integer.parseInt(articleId));
                 ok = true;
                 resp.getWriter().write("{\"message\": \"3\"}");
             } catch (JSONException ex) {
             }
         }
-        
-        if (!ok) {
+
+        if (!ok && userId != null) {
             try { // xóa list reactionArticle theo userId
-                JSONObject jsonObject = new JSONObject(json.toString());
-                int userId = Integer.parseInt(req.getParameter("userId"));
-                rad.deleteRAByCriteria("user_id = " + userId);
+                  // JSONObject jsonObject = new JSONObject(json.toString());
+                rad.deleteRAByCriteria("user_id = " + Integer.parseInt(userId));
                 ok = true;
                 resp.getWriter().write("{\"message\": \"4\"}");
             } catch (JSONException ex) {
-            }            
+            }
         }
     }
 }

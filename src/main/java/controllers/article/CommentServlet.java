@@ -28,7 +28,7 @@ import org.json.JSONObject;
  *
  * @author Hanh
  */
-@WebServlet(name="CommentServlet", urlPatterns={"/comment"})
+@WebServlet(name = "CommentServlet", urlPatterns = { "/comment" })
 public class CommentServlet extends HttpServlet {
 
     @Override
@@ -40,22 +40,22 @@ public class CommentServlet extends HttpServlet {
             super.service(req, resp);
         }
     }
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         String articleId = request.getParameter("articleId"); // lọc theo bài viết
         String id = request.getParameter("id"); // lọc theo CommentId
         String sortBy = request.getParameter("sortBy"); // sắp cmt trong bài viết xếp theo tiêu chí
         CommentDAO cd = new CommentDAO();
         Gson gson = new Gson();
         String json = "";
-        
+
         if (id != null) { // Lấy comment theo id
             Comment cmt = (Comment) cd.getById(Integer.parseInt(id));
             json = gson.toJson(cmt);
-        } 
-        
+        }
+
         else if (articleId != null) { // lấy theo bài viết
             String criteria = "article_id = " + articleId;
             ArrayList<Comment> list = cd.getListComment(criteria); // mặc định
@@ -65,48 +65,48 @@ public class CommentServlet extends HttpServlet {
                         @Override
                         public int compare(Comment o1, Comment o2) {
                             return o2.getLikes() - o1.getLikes();
-                        }   
+                        }
                     });
-                } 
-                
+                }
+
                 else if (sortBy.equals("scores")) { // theo số điểm
                     Collections.sort(list, new Comparator<Comment>() {
                         @Override
                         public int compare(Comment o1, Comment o2) {
                             return (o2.getLikes() - o2.getDislikes()) - (o1.getLikes() - o1.getDislikes());
-                        }   
+                        }
                     });
-                } 
-                
+                }
+
                 else if (sortBy.equals("newest")) { // theo thời gian mới nhất
                     Collections.sort(list, new Comparator<Comment>() {
                         @Override
                         public int compare(Comment o1, Comment o2) {
                             return o2.getCommentTime().compareTo(o1.getCommentTime());
-                        }   
+                        }
                     });
                 }
-                
+
             }
-            
+
             json = gson.toJson(list);
         }
-            
+
         else { // lấy toàn bộ comment
             String ci = "1";
             ArrayList<Comment> list = cd.getListComment(ci); // mặc định
             json = gson.toJson(list);
         }
-        
+
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);
-    }   
-    
+    }
+
     // tạo comment
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         try {
             // StringBuilder json = (StringBuilder) request.getAttribute("json");
             BufferedReader reader = request.getReader();
@@ -120,7 +120,7 @@ public class CommentServlet extends HttpServlet {
             int articleId = jsonObject.getInt("articleId");
             String commentContent = jsonObject.getString("commentContent");
             Timestamp now = new Timestamp(System.currentTimeMillis());
-            
+
             Comment cmt = new Comment(0, 0, 0, commentContent, now, articleId, userId);
             CommentDAO cd = new CommentDAO();
             int newId = cd.addComment(cmt);
@@ -129,10 +129,11 @@ public class CommentServlet extends HttpServlet {
         } catch (JSONException ex) {
         }
     }
-    
+
     // cập nhật số like, dislike của comment
     protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // StringBuilder json = (StringBuilder) req.getAttribute("json");BufferedReader reader = request.getReader();
+        // StringBuilder json = (StringBuilder) req.getAttribute("json");BufferedReader
+        // reader = request.getReader();
         BufferedReader reader = req.getReader();
         StringBuilder json = new StringBuilder();
         String line;
@@ -152,14 +153,14 @@ public class CommentServlet extends HttpServlet {
             cmt.setDislikes(dislikes);
             cd.updateObject(cmt);
             jsonString = gson.toJson(cmt);
-            
-        } catch (JSONException e){
+
+        } catch (JSONException e) {
             jsonString = "json sai";
         }
-        resp.setContentType("application/json"); 
+        resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write(jsonString);
-    }  
+    }
 
     // xóa cmt
     @Override
@@ -168,45 +169,46 @@ public class CommentServlet extends HttpServlet {
         Gson gson = new Gson();
         String jsonString = "";
         boolean ok = false;
-        if (!ok) {
+        String commentId = req.getParameter("commentId");
+        String byArticle = req.getParameter("byArticle");
+        String articleId = req.getParameter("articleId");
+
+        String byUser = req.getParameter("byUser");
+        String userId = req.getParameter("userId");
+        if (commentId != null) {
             try { // có người ấn nút xóa
-                // JSONObject jsonObject = new JSONObject(json.toString());
-                int commentId = Integer.parseInt(req.getParameter("commentId"));
+                  // JSONObject jsonObject = new JSONObject(json.toString());
                 CommentDAO cd = new CommentDAO();
-                cd.deleteObject(commentId);
+                cd.deleteObject(Integer.parseInt(commentId));
                 ok = true;
                 jsonString = "{\"message\": \"delete successfully\"}";
-            } catch (JSONException e){
+            } catch (JSONException e) {
             }
         }
-        
-        if (!ok) {
+
+        if (byArticle != null && articleId != null) {
             try { // xóa theo article
-                // JSONObject jsonObject = new JSONObject(json.toString());
-                boolean byArticle = Boolean.parseBoolean(req.getParameter("byArticle"));
-                int articleId = Integer.parseInt(req.getParameter("articleId"));
+                  // JSONObject jsonObject = new JSONObject(json.toString());
                 CommentDAO cd = new CommentDAO();
-                cd.deleteByArticleId(articleId);
+                cd.deleteByArticleId(Integer.parseInt(articleId));
                 ok = true;
                 jsonString = "{\"message\": \"delete successfully\"}";
-            } catch (JSONException e){
+            } catch (JSONException e) {
             }
         }
-        
-        if (!ok) {
+
+        if (byUser != null && userId != null) {
             try { // xóa theo user
-                // JSONObject jsonObject = new JSONObject(json.toString());
-                boolean byUser = Boolean.parseBoolean(req.getParameter("byUser"));
-                int userId = Integer.parseInt(req.getParameter("userId"));
+                  // JSONObject jsonObject = new JSONObject(json.toString());
                 CommentDAO cd = new CommentDAO();
-                cd.deleteByUserId(userId);
+                cd.deleteByUserId(Integer.parseInt(userId));
                 ok = true;
                 jsonString = "{\"message\": \"delete successfully\"}";
-            } catch (JSONException e){
+            } catch (JSONException e) {
             }
         }
-        
-        resp.setContentType("application/json"); 
+
+        resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write(jsonString);
     }

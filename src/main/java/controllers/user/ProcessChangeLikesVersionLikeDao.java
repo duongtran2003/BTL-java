@@ -52,7 +52,7 @@ public class ProcessChangeLikesVersionLikeDao extends HttpServlet {
            //lay ra user tu db
            User yen = (User)(new UserDAO()).getById(user_id);
            yen.setScore_to_award(yen.getScore_to_award() + numlike);
-           if(yen.getLikes() - yen.getDislikes() > 100)yen.setUser_role(1);
+           if(yen.getScore_to_award() > 100)yen.setUser_role(1);
            (new UserDAO()).updateObject(yen);
            response.getWriter().write("{" + "\"VALID\" : 1" + "}" );
            //check format

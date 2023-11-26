@@ -52,7 +52,7 @@ public class ProcessChangeDislikes extends HttpServlet {
            User yen = (User)(new UserDAO()).getById(user_id);
            yen.setDislikes(yen.getDislikes()+ numdislikes);
            yen.setScore_to_award(yen.getScore_to_award() - numdislikes);
-           if(yen.getLikes() - yen.getDislikes() < 100)yen.setUser_role(0);
+           if(yen.getScore_to_award() < 100)yen.setUser_role(0);
            (new UserDAO()).updateObject(yen);
            response.getWriter().write("{" + "\"VALID\" : 1" + "}" );
            //check format

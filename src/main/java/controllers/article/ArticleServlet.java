@@ -91,7 +91,6 @@ public class ArticleServlet extends HttpServlet {
             } catch (JSONException e) {
             }
         }
-
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write(jsonString);
@@ -275,14 +274,16 @@ public class ArticleServlet extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         boolean ok = false;
-        if (!ok) {
+        String articleId = request.getParameter("articleId");
+        String byUser = request.getParameter("byUser");
+        String userId = request.getParameter("userId");
+        if (articleId != null) {
             try { // xóa khi có người ấn xóa bài viết
                   // StringBuilder json = (StringBuilder) request.getAttribute("json");
 
                 // JSONObject jsonObject = new JSONObject(json.toString());
-                int articleId = Integer.parseInt(request.getParameter("articleId"));
                 ArticleDAO ad = new ArticleDAO();
-                ad.deleteObject(articleId);
+                ad.deleteObject(Integer.parseInt(articleId));
                 String jsonString = "{\"message\": \"Delete successfully.\"}";
                 ok = true;
                 response.getWriter().write(jsonString);
@@ -290,15 +291,13 @@ public class ArticleServlet extends HttpServlet {
             }
         }
 
-        if (!ok) {
+        if (byUser != null && userId != null) {
             try { // xóa theo userId
-                // StringBuilder json = (StringBuilder) request.getAttribute("json");
+                  // StringBuilder json = (StringBuilder) request.getAttribute("json");
 
                 // JSONObject jsonObject = new JSONObject(json.toString());
-                boolean byUser = Boolean.parseBoolean(request.getParameter("byUser"));
-                int userId = Integer.parseInt(request.getParameter("userId"));
                 ArticleDAO ad = new ArticleDAO();
-                ad.deleteByUserId(userId);
+                ad.deleteByUserId(Integer.parseInt(userId));
                 String jsonString = "{\"message\": \"Delete successfully.\"}";
                 ok = true;
                 response.getWriter().write(jsonString);
