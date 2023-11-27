@@ -77,6 +77,8 @@ public class createOrder extends HttpServlet {
 			int user_id = Integer.parseInt(jsonMap.get("user_id").toString());
 			String address = jsonMap.get("address").toString();
 			String contact = jsonMap.get("contact").toString();
+			int has_voucher_id = Integer.parseInt(jsonMap.get("has_voucher_id").toString());
+			boolean isSuccess = new HasVoucherDAO().deleteObject(has_voucher_id);
 			List<ProductOrder> prods = new ArrayList<>();
 			int order_id = orderDAO.addOrder(new Order(0, user_id, prods, total, address, contact));
 			ProductDAO productDAO = new ProductDAO();
