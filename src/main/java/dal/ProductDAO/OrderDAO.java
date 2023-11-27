@@ -96,10 +96,10 @@ public class OrderDAO extends DAO{
 
         try {
             Order order = (Order) object;
-            String sql = "insert into orders(user_id, status, discounted, address, contact) value (?, 0, ?, ?, ?)";
+            String sql = "insert into orders(user_id, status, total, address, contact) value (?, 0, ?, ?, ?)";
             PreparedStatement st = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.setInt(1, order.getUser_id());
-            st.setInt(2, order.getDiscounted());
+            st.setInt(2, order.getTotal());
             st.setString(3, order.getAddress());
             st.setString(4, order.getContact());
             st.executeUpdate();

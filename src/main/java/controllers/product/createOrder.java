@@ -62,26 +62,23 @@ public class createOrder extends HttpServlet {
 		// }
 		Map<String, String> res = new HashMap<>();
 		try {
-			int has_voucher_id = Integer.parseInt(jsonMap.get("has_voucher_id").toString());
-			HasVoucherDAO hasVoucherDAO = new HasVoucherDAO();
-			HasVoucher hasVoucher = (HasVoucher) hasVoucherDAO.getById(has_voucher_id);
-			int discounted = 0;
-			if (hasVoucher != null) {
-				Date exp = new Date(hasVoucher.getExpiration_date().getTime());
-				Date dateNow = new Date(System.currentTimeMillis());
-				if (dateNow.getTime() <= exp.getTime()) {
-					VoucherDAO voucherDAO = new VoucherDAO();
-					int voucher_id = hasVoucher.getVoucher_id();
-					Voucher voucher = (Voucher) voucherDAO.getById(voucher_id);
-					discounted = voucher.getDiscount_amount();
-				}
-			}
+			int total = 0;
+			// if (hasVoucher != null) {
+			// 	Date exp = new Date(hasVoucher.getExpiration_date().getTime());
+			// 	Date dateNow = new Date(System.currentTimeMillis());
+			// 	if (dateNow.getTime() <= exp.getTime()) {
+			// 		VoucherDAO voucherDAO = new VoucherDAO();
+			// 		int voucher_id = hasVoucher.getVoucher_id();
+			// 		Voucher voucher = (Voucher) voucherDAO.getById(voucher_id);
+			// 		discounted = voucher.getDiscount_amount();
+			// 	}
+			// }
 			OrderDAO orderDAO = new OrderDAO();
 			int user_id = Integer.parseInt(jsonMap.get("user_id").toString());
 			String address = jsonMap.get("address").toString();
 			String contact = jsonMap.get("contact").toString();
 			List<ProductOrder> prods = new ArrayList<>();
-			int order_id = orderDAO.addOrder(new Order(0, user_id, prods, discounted, address, contact));
+			int order_id = orderDAO.addOrder(new Order(0, user_id, prods, total, address, contact));
 			ProductDAO productDAO = new ProductDAO();
 			ProductOrderDAO productOrderDAO = new ProductOrderDAO();
 			if (order_id != -1) {

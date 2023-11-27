@@ -20,16 +20,16 @@ public class Order {
     private Timestamp date;
     private List<ProductOrder> entries = new ArrayList<> ();
     private int status;
-    private int discounted;
+    private int total;
 	private String address;
 	private String contact;
 
-    public Order(int order_id, int user_id, List<ProductOrder> entries, int discounted, String address, String contact) {
+    public Order(int order_id, int user_id, List<ProductOrder> entries, int total, String address, String contact) {
         this.order_id = order_id;
         this.user_id = user_id;
         this.entries = entries;
         this.status = 0; // 0 - pending, 1 - delivering, 2 - delivered, 3 - failed
-        this.discounted = discounted;
+        this.total = total;
 		this.address = address;
 		this.contact = contact;
     }
@@ -50,8 +50,8 @@ public class Order {
 		return entries;
 	}
 
-    public int getDiscounted() {
-        return discounted;
+    public int getTotal() {
+        return total;
     }
 
 	public int getStatus() {
@@ -74,8 +74,8 @@ public class Order {
 		this.date = date;
 	}
 
-    public void setDiscounted(int discounted) {
-        this.discounted = discounted;
+    public void setTotal(int total) {
+        this.total = total;
     }
 
     public void setAddress(String add) {
