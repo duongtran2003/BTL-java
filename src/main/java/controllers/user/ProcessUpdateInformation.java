@@ -60,7 +60,7 @@ import org.json.JSONObject;
 /* cac thong tin frontend can gui
 // gender : boolean
 //  full_name : string
-// Date_of_birth : string
+// date_of_birth : string
 //  favor_fc : String
 //  email :string
 // phone_number :String
@@ -165,8 +165,11 @@ public class ProcessUpdateInformation extends HttpServlet {
                 PhoneNumberDAO config3 = new PhoneNumberDAO();
                 yen.setFull_name(yourdata.getString("full_name").trim());
                 yen.setDate_of_birth(yourdata.getString("date_of_birth").trim());
+                yen.setAvatar_image_path(yourdata.getString("avatar_image_path").trim());
                 yen.setFavor_fc(yourdata.getString("favor_fc").trim());
                 //set address
+                yen.setUser_role(yourdata.getInt("user_role"));
+                yen.setScore_to_award(yourdata.getInt("score_to_award"));
                 yen.setCountry(yourdata.getString("country").trim());
                 yen.setCity(yourdata.getString("city").trim());
                 yen.setDistrict(yourdata.getString("district").trim());

@@ -4,6 +4,7 @@ D:\projects\java\BTL-java\src\main\java\helper\JSONHelper.java
 D:\projects\java\BTL-java\src\main\java\dal\ProductDAO\VoucherDAO.java
 D:\projects\java\BTL-java\src\main\java\controllers\product\ReviewServlet.java
 D:\projects\java\BTL-java\src\main\java\controllers\user\ProcessLogin.java
+D:\projects\java\BTL-java\src\main\java\controllers\user\ProcessGetEmail.java
 D:\projects\java\BTL-java\src\main\java\controllers\product\VoucherServlet.java
 D:\projects\java\BTL-java\src\main\java\Model\Article\ReactionComment.java
 D:\projects\java\BTL-java\src\main\java\com\mycompany\btl\java\resources\JakartaEE10Resource.java
@@ -45,6 +46,7 @@ D:\projects\java\BTL-java\src\main\java\controllers\article\ReactionArticleServl
 D:\projects\java\BTL-java\src\main\java\dal\ProductDAO\OrderDAO.java
 D:\projects\java\BTL-java\src\main\java\controllers\article\CommentServlet.java
 D:\projects\java\BTL-java\src\main\java\controllers\product\index.java
+D:\projects\java\BTL-java\src\main\java\controllers\user\ProcessGetAllUsers.java
 D:\projects\java\BTL-java\src\main\java\Model\Article\Comment.java
 D:\projects\java\BTL-java\src\main\java\controllers\product\deleteOrderById.java
 D:\projects\java\BTL-java\src\main\java\controllers\user\ProcessChangeLikesVersionLikeDao.java
