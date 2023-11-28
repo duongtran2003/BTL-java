@@ -89,7 +89,8 @@ public class ProcessOrder extends HttpServlet {
 					prodDAO.sellProduct(prod_id);
 				}
 			}
-
+			res.put("message", "success");
+			JSONHelper.sendJsonAsResponse(response, 200, res);
 		} catch (Exception e) {
 			res.put("message", "bad request");
 			JSONHelper.sendJsonAsResponse(response, 400, res);

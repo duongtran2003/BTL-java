@@ -35,7 +35,7 @@ public class OrderDAO extends DAO{
             PreparedStatement st = con.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Order newOrder = new Order(rs.getInt("order_id"), rs.getInt("user_id"), entries, rs.getInt("discounted"), rs.getString("address"), rs.getString("contact"));
+                Order newOrder = new Order(rs.getInt("order_id"), rs.getInt("user_id"), entries, rs.getInt("total"), rs.getString("address"), rs.getString("contact"));
                 newOrder.setDate(rs.getTimestamp("date"));
                 newOrder.setStatus(rs.getInt("status"));
                 return newOrder;

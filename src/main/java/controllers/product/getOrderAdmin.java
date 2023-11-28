@@ -32,7 +32,6 @@ public class GetOrderAdmin extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String id = request.getPathInfo().substring(1);
 		Map<String, Object> res = new HashMap<String, Object>();
 		try {
 			OrderDAO orderDao = new OrderDAO();
@@ -59,7 +58,6 @@ public class GetOrderAdmin extends HttpServlet {
 			// 		break;
 			// 	}
 			// }
-			int _id = Integer.parseInt(id);
 			List<Order> order = orderDao.getOrderAdmin();
 			JSONHelper.sendJsonAsResponse(response, 200, order);
 			return;

@@ -62,7 +62,6 @@ public class CreateOrder extends HttpServlet {
 		// }
 		Map<String, String> res = new HashMap<>();
 		try {
-			int total = 0;
 			// if (hasVoucher != null) {
 			// 	Date exp = new Date(hasVoucher.getExpiration_date().getTime());
 			// 	Date dateNow = new Date(System.currentTimeMillis());
@@ -77,8 +76,7 @@ public class CreateOrder extends HttpServlet {
 			int user_id = Integer.parseInt(jsonMap.get("user_id").toString());
 			String address = jsonMap.get("address").toString();
 			String contact = jsonMap.get("contact").toString();
-			int has_voucher_id = Integer.parseInt(jsonMap.get("has_voucher_id").toString());
-			boolean isSuccess = new HasVoucherDAO().deleteObject(has_voucher_id);
+			int total = Integer.parseInt(jsonMap.get("total").toString());
 			List<ProductOrder> prods = new ArrayList<>();
 			int order_id = orderDAO.addOrder(new Order(0, user_id, prods, total, address, contact));
 			ProductDAO productDAO = new ProductDAO();
@@ -96,6 +94,8 @@ public class CreateOrder extends HttpServlet {
 					productOrderDAO.addObject(
 							new ProductOrder(0, newProd, order_id, nametag, color, size, squad_number, quantity));
 				}
+				res.put("message", "success");
+				JSONHelper.sendJsonAsResponse(response, 200, res);
 			} else {
 				res.put("message", "Co van de xay ra trong luc tao order");
 				JSONHelper.sendJsonAsResponse(response, 500, res);
