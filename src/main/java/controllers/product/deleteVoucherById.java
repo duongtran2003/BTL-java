@@ -5,10 +5,10 @@
 
 package controllers.product;
 
-import Model.User.User;
 import static common.product.Constant.URL_VOUCHER_DELETE_VOUCHER_BY_ID;
-import dal.ProductDAO.VoucherDAO;
-import dal.UserDAO.UserDAO;
+
+import dal.productdao.VoucherDAO;
+import dal.userdao.UserDAO;
 import helper.JSONHelper;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -17,6 +17,8 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.user.User;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +27,7 @@ import java.util.Map;
  * @author DELL
  */
 @WebServlet(name="deleteVoucherById", urlPatterns={URL_VOUCHER_DELETE_VOUCHER_BY_ID})
-public class deleteVoucherById extends HttpServlet {
+public class DeleteVoucherById extends HttpServlet {
     // xoá voucher theo id
     private VoucherDAO voucherDAO=new VoucherDAO();
     UserDAO userDAO=new UserDAO();

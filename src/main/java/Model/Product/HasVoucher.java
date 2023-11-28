@@ -1,4 +1,4 @@
-package Model.Product;
+package model.product;
 
 import java.sql.Date;
 

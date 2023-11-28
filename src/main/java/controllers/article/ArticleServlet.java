@@ -5,11 +5,10 @@
 
 package controllers.article;
 
-import Model.Article.Article;
-import Model.User.User;
 import com.google.gson.Gson;
-import dal.articleDAO.ArticleDAO;
-import dal.UserDAO.UserDAO;
+
+import dal.articledao.ArticleDAO;
+import dal.userdao.UserDAO;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,6 +17,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.article.Article;
+import model.user.User;
+
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;

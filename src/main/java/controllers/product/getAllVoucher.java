@@ -5,9 +5,10 @@
 
 package controllers.product;
 
-import Model.Product.Voucher;
+import dal.productdao.VoucherDAO;
+
 import static common.product.Constant.URL_VOUCHER_GET_ALL_VOUCHER;
-import dal.ProductDAO.VoucherDAO;
+
 import helper.JSONHelper;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -15,6 +16,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.product.Voucher;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +27,7 @@ import java.util.Map;
  * @author DELL
  */
 @WebServlet(name="getAllVoucher", urlPatterns={URL_VOUCHER_GET_ALL_VOUCHER})
-public class getAllVoucher extends HttpServlet {
+public class GetAllVoucher extends HttpServlet {
     
     // lấy ra tất cả voucher hiện có của shop
     @Override

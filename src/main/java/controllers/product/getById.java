@@ -10,21 +10,21 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 
-import Model.Product.Product;
-import dal.ProductDAO.ProductDAO;
+import dal.productdao.ProductDAO;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.product.Product;
 
 /**
  *
  * @author pc
  */
 @WebServlet(name = "getById", urlPatterns = { "/product/getById/*" })
-public class getById extends HttpServlet {
+public class GetById extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

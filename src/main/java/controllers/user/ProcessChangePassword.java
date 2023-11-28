@@ -4,8 +4,7 @@
  */
 package controllers.user;
 
-import Model.User.User;
-import dal.UserDAO.UserDAO;
+import dal.userdao.UserDAO;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +13,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletResponse;
+import model.user.User;
+
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;

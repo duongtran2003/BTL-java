@@ -5,12 +5,12 @@
 
 package controllers.product;
 
-import Model.User.User;
 import com.google.gson.Gson;
 import static common.product.Constant.URL_HAS_VOUCHER_DELETE_BY_ID;
-import dal.ProductDAO.HasVoucherDAO;
-import dal.ProductDAO.VoucherDAO;
-import dal.UserDAO.UserDAO;
+
+import dal.productdao.HasVoucherDAO;
+import dal.productdao.VoucherDAO;
+import dal.userdao.UserDAO;
 import helper.JSONHelper;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -19,6 +19,8 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.user.User;
+
 import java.util.HashMap;
 import java.util.Map;
 /**
@@ -26,7 +28,7 @@ import java.util.Map;
  * @author DELL
  */
 @WebServlet(name="deleteHasVoucherById", urlPatterns={URL_HAS_VOUCHER_DELETE_BY_ID})
-public class deleteHasVoucherById extends HttpServlet {
+public class DeleteHasVoucherById extends HttpServlet {
     private Gson gson=new Gson();
     private HasVoucherDAO hasVoucherDAO=new HasVoucherDAO();
     private VoucherDAO voucherDAO=new VoucherDAO();

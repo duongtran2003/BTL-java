@@ -1,6 +1,8 @@
-package dal.ProductDAO;
-import Model.Product.Voucher;
-import dal.DAO.DAO;
+package dal.productdao;
+import dal.dao.DAO;
+import model.product.Voucher;
+
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

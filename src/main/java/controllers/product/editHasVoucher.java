@@ -5,11 +5,10 @@
 
 package controllers.product;
 
-import Model.Product.HasVoucher;
-import Model.User.User;
 import static common.product.Constant.URL_HAS_VOUCHER_EDIT;
-import dal.ProductDAO.HasVoucherDAO;
-import dal.UserDAO.UserDAO;
+
+import dal.productdao.HasVoucherDAO;
+import dal.userdao.UserDAO;
 import helper.JSONHelper;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -18,6 +17,9 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.product.HasVoucher;
+import model.user.User;
+
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -30,7 +32,7 @@ import org.json.JSONObject;
  * @author DELL
  */
 @WebServlet(name="editHasVoucher", urlPatterns={URL_HAS_VOUCHER_EDIT})
-public class editHasVoucher extends HttpServlet {
+public class EditHasVoucher extends HttpServlet {
    
     
     private final HasVoucherDAO hasVoucherDAO=new HasVoucherDAO();

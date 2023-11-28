@@ -4,12 +4,9 @@
  */
 package controllers.user;
 
-import dal.UserDAO.EmailDAO;
-import dal.UserDAO.PhoneNumberDAO;
-import dal.UserDAO.UserDAO;
-import Model.User.Email;
-import Model.User.PhoneNumber;
-import Model.User.User;
+import dal.userdao.EmailDAO;
+import dal.userdao.PhoneNumberDAO;
+import dal.userdao.UserDAO;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,6 +14,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.user.Email;
+import model.user.PhoneNumber;
+import model.user.User;
 import jakarta.servlet.annotation.WebServlet;
 import java.io.BufferedReader;
 import java.text.SimpleDateFormat;

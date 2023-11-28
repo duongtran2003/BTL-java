@@ -8,9 +8,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import Model.User.User;
-import dal.ProductDAO.ProductDAO;
-import dal.UserDAO.UserDAO;
+import dal.productdao.ProductDAO;
+import dal.userdao.UserDAO;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,13 +17,14 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.user.User;
 
 /**
  *
  * @author pc
  */
 @WebServlet(name = "deleteById", urlPatterns = { "/product/deleteById/*" })
-public class deleteById extends HttpServlet {
+public class DeleteById extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

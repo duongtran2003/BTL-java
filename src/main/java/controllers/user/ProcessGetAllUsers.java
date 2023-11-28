@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import dal.UserDAO.UserDAO;
+import dal.userdao.UserDAO;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

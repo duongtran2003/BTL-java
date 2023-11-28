@@ -2,10 +2,10 @@
 
 package controllers.product;
 
-import Model.User.User;
 import static common.product.Constant.URL_REVIEW_DELETE_BY_ID;
-import dal.ProductDAO.ReviewDAO;
-import dal.UserDAO.UserDAO;
+
+import dal.productdao.ReviewDAO;
+import dal.userdao.UserDAO;
 import helper.JSONHelper;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -14,6 +14,8 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.user.User;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +24,7 @@ import java.util.Map;
  * @author DELL
  */
 @WebServlet(name="deleteReviewById", urlPatterns={URL_REVIEW_DELETE_BY_ID})
-public class deleteReviewById extends HttpServlet {
+public class DeleteReviewById extends HttpServlet {
    
     // xoá Review theo id
     private ReviewDAO reviewDAO=new ReviewDAO();

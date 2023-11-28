@@ -5,9 +5,9 @@
 
 package controllers.article;
 
-import Model.Article.ReactionArticle;
+import dal.articledao.ReactionArticleDAO;
+
 import com.google.gson.Gson;
-import dal.articleDAO.ReactionArticleDAO;
 
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -15,6 +15,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.article.ReactionArticle;
+
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import org.json.JSONException;

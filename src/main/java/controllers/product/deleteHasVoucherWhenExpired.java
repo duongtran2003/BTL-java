@@ -5,11 +5,10 @@
 
 package controllers.product;
 
-import Model.Product.HasVoucher;
-import Model.User.User;
 import static common.product.Constant.URL_HAS_VOUCHER_DELETE_WHEN_EXPIRED;
-import dal.ProductDAO.HasVoucherDAO;
-import dal.UserDAO.UserDAO;
+
+import dal.productdao.HasVoucherDAO;
+import dal.userdao.UserDAO;
 import helper.JSONHelper;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -18,6 +17,9 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.product.HasVoucher;
+import model.user.User;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +29,7 @@ import java.util.Map;
  * @author DELL
  */
 @WebServlet(name="deleteHasVoucherWhenExpired", urlPatterns={URL_HAS_VOUCHER_DELETE_WHEN_EXPIRED})
-public class deleteHasVoucherWhenExpired extends HttpServlet {
+public class DeleteHasVoucherWhenExpired extends HttpServlet {
    
     // xoá hasvoucher khi hết hạn
     private HasVoucherDAO hasVoucherDAO=new HasVoucherDAO();
@@ -58,7 +60,7 @@ public class deleteHasVoucherWhenExpired extends HttpServlet {
         //         }
         // }
 
-        List <HasVoucher> a= hasVoucherDAO.queryObjects();
+        List <HasVoucher> a = hasVoucherDAO.queryObjects();
         if(a==null){
             res.put("message", "HasVoucher trống");
             JSONHelper.sendJsonAsResponse(resp, 404, res);

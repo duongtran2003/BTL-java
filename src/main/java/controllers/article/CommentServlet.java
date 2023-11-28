@@ -5,9 +5,10 @@
 
 package controllers.article;
 
-import Model.Article.Comment;
+import dal.articledao.CommentDAO;
+
 import com.google.gson.Gson;
-import dal.articleDAO.CommentDAO;
+
 import helper.JSONHelper;
 
 import java.io.BufferedReader;
@@ -17,6 +18,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.article.Comment;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;

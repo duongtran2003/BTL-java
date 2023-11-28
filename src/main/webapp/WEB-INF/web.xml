@@ -12,7 +12,7 @@
 
    <filter>
         <filter-name>CORSFilter</filter-name>
-        <filter-class>CORSFilter.CORSFilter</filter-class>
+        <filter-class>corsfilter.CORSFilter</filter-class>
     </filter>
 
     <filter-mapping>

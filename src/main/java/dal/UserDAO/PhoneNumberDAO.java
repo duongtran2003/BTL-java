@@ -1,10 +1,10 @@
-package dal.UserDAO;
+package dal.userdao;
 
 
-import Model.User.Email;
-import Model.User.PhoneNumber;
-import Model.User.User;
-import dal.DAO.DAO;
+import dal.dao.DAO;
+import model.user.Email;
+import model.user.PhoneNumber;
+import model.user.User;
 
 import com.google.gson.Gson;
 import java.sql.DriverManager;

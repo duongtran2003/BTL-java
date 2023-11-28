@@ -5,9 +5,10 @@
 
 package controllers.product;
 
-import Model.Product.Review;
+import dal.productdao.ReviewDAO;
+
 import static common.product.Constant.URL_LIST_REVIEW_GET_BY_PRODUCT_ID;
-import dal.ProductDAO.ReviewDAO;
+
 import helper.JSONHelper;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -15,6 +16,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.product.Review;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +27,7 @@ import java.util.Map;
  * @author DELL
  */
 @WebServlet(name="getListReviewbyProductId", urlPatterns={URL_LIST_REVIEW_GET_BY_PRODUCT_ID})
-public class getListReviewbyProductId extends HttpServlet {
+public class GetListReviewbyProductId extends HttpServlet {
    
    
    

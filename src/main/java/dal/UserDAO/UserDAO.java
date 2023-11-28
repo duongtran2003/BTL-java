@@ -1,6 +1,6 @@
-package dal.UserDAO;
-import Model.User.User;
-import dal.DAO.DAO;
+package dal.userdao;
+import dal.dao.DAO;
+import model.user.User;
 
 import com.google.gson.Gson;
 import java.sql.DriverManager;

@@ -5,11 +5,10 @@
 
 package controllers.product;
 
-import Model.Product.Voucher;
-import Model.User.User;
 import static common.product.Constant.URL_VOUCHER_EDIT;
-import dal.ProductDAO.VoucherDAO;
-import dal.UserDAO.UserDAO;
+
+import dal.productdao.VoucherDAO;
+import dal.userdao.UserDAO;
 import helper.JSONHelper;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -18,6 +17,9 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.product.Voucher;
+import model.user.User;
+
 import java.util.HashMap;
 import java.util.Map;
 import org.json.JSONException;
@@ -28,7 +30,7 @@ import org.json.JSONObject;
  * @author DELL
  */
 @WebServlet(name="editVoucher", urlPatterns={URL_VOUCHER_EDIT})
-public class editVoucher extends HttpServlet {
+public class EditVoucher extends HttpServlet {
     private final VoucherDAO voucherDAO=new VoucherDAO();
     private final UserDAO userDAO=new UserDAO();
     

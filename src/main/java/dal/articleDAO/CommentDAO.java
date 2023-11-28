@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dal.articleDAO;
+package dal.articledao;
 
-import Model.Article.Comment;
-import dal.DAO.DAO;
+import dal.dao.DAO;
+import model.article.Comment;
 
 import java.beans.Statement;
 import java.sql.PreparedStatement;

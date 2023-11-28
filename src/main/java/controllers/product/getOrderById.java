@@ -10,8 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Model.Product.Order;
-import dal.ProductDAO.OrderDAO;
+import dal.productdao.OrderDAO;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -19,13 +18,14 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.product.Order;
 
 /**
  *
  * @author pc
  */
 @WebServlet(name = "getOrderById", urlPatterns = { "/product/getOrderById/*" })
-public class getOrderById extends HttpServlet {
+public class GetOrderById extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

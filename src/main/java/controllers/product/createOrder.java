@@ -14,29 +14,29 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import Model.Product.HasVoucher;
-import Model.Product.Voucher;
-import Model.Product.Order;
-import Model.Product.Product;
-import Model.Product.ProductOrder;
-import dal.ProductDAO.HasVoucherDAO;
-import dal.ProductDAO.OrderDAO;
-import dal.ProductDAO.ProductDAO;
-import dal.ProductDAO.ProductOrderDAO;
-import dal.ProductDAO.VoucherDAO;
+import dal.productdao.HasVoucherDAO;
+import dal.productdao.OrderDAO;
+import dal.productdao.ProductDAO;
+import dal.productdao.ProductOrderDAO;
+import dal.productdao.VoucherDAO;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.product.HasVoucher;
+import model.product.Order;
+import model.product.Product;
+import model.product.ProductOrder;
+import model.product.Voucher;
 
 /**
  *
  * @author pc
  */
 @WebServlet(name = "createOrder", urlPatterns = { "/product/createOrder" })
-public class createOrder extends HttpServlet {
+public class CreateOrder extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

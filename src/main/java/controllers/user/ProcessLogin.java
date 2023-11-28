@@ -4,8 +4,8 @@
  */
 package controllers.user;
 
-import dal.UserDAO.UserDAO;
-import Model.User.User;
+import dal.userdao.UserDAO;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.io.IOException;
@@ -15,6 +15,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletResponse;
+import model.user.User;
+
 import java.io.BufferedReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;

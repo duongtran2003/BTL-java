@@ -4,14 +4,11 @@
  */
 package controllers.product;
 
-import Model.Product.Order;
-import Model.Product.Product;
-import Model.Product.ProductOrder;
 import static common.product.Constant.ULR_REVIEW_POST_AND_GET;
-import dal.ProductDAO.ReviewDAO;
-import Model.Product.Review;
-import dal.ProductDAO.OrderDAO;
-import dal.ProductDAO.ProductDAO;
+
+import dal.productdao.OrderDAO;
+import dal.productdao.ProductDAO;
+import dal.productdao.ReviewDAO;
 import helper.JSONHelper;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -19,6 +16,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.product.Order;
+import model.product.Product;
+import model.product.ProductOrder;
+import model.product.Review;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

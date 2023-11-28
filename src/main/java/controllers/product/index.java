@@ -4,8 +4,7 @@
  */
 package controllers.product;
 
-import Model.Product.Product;
-import dal.ProductDAO.ProductDAO;
+import dal.productdao.ProductDAO;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,13 +20,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.product.Product;
 
 /**
  *
  * @author pc
  */
 @WebServlet(name = "index", urlPatterns = {"/product/index"})
-public class index extends HttpServlet {
+public class Index extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

@@ -2,11 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dal.ProductDAO;
+package dal.productdao;
 
-import Model.Product.HasVoucher;
-import Model.Product.Voucher;
-import dal.DAO.DAO;
+import dal.dao.DAO;
+import model.product.HasVoucher;
+import model.product.Voucher;
+
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

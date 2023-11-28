@@ -9,21 +9,21 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import Model.User.User;
-import dal.UserDAO.UserDAO;
+import dal.userdao.UserDAO;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.user.User;
 
 /**
  *
  * @author pc
  */
 @WebServlet(name = "getUserById", urlPatterns = {"/getUserById/*"})
-public class getUserById extends HttpServlet {
+public class GetUserById extends HttpServlet {
 
 	
 	@Override

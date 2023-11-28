@@ -12,25 +12,25 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import Model.Product.Order;
-import Model.Product.ProductOrder;
-import Model.User.User;
-import dal.ProductDAO.OrderDAO;
-import dal.ProductDAO.ProductDAO;
-import dal.UserDAO.UserDAO;
+import dal.productdao.OrderDAO;
+import dal.productdao.ProductDAO;
+import dal.userdao.UserDAO;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.product.Order;
+import model.product.ProductOrder;
+import model.user.User;
 
 /**
  *
  * @author pc
  */
 @WebServlet(name = "processOrder", urlPatterns = { "/product/processOrder" })
-public class processOrder extends HttpServlet {
+public class ProcessOrder extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String method = req.getMethod();

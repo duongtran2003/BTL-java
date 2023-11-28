@@ -1,4 +1,4 @@
-package Model.User;
+package model.user;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;

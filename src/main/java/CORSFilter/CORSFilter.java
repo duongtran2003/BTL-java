@@ -2,16 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package CORSFilter;
+package corsfilter;
 
-/**
- *
- * @author Hanh
- */
-import Model.Article.Article;
-import Model.User.User;
-import dal.articleDAO.ArticleDAO;
-import dal.UserDAO.UserDAO;
+import dal.articledao.ArticleDAO;
+import dal.userdao.UserDAO;
+
 import java.io.IOException;
 
 import jakarta.servlet.Filter;
@@ -22,6 +17,9 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.article.Article;
+import model.user.User;
+
 import java.io.BufferedReader;
 import org.json.JSONException;
 import org.json.JSONObject;

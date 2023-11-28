@@ -2,12 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dal.ProductDAO;
-import Model.Product.Order;
-import Model.Product.Product;
-import Model.Product.ProductOrder;
-import controllers.product.processOrder;
-import dal.DAO.DAO;
+package dal.productdao;
+import controllers.product.ProcessOrder;
+import dal.dao.DAO;
+import model.product.Order;
+import model.product.Product;
+import model.product.ProductOrder;
+
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

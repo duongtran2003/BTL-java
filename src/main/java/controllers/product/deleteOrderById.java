@@ -8,14 +8,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
-
-import Model.Product.Order;
-import Model.User.User;
-
 import java.util.List;
 
-import dal.ProductDAO.OrderDAO;
-import dal.UserDAO.UserDAO;
+import dal.productdao.OrderDAO;
+import dal.userdao.UserDAO;
 import helper.JSONHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -23,13 +19,15 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.product.Order;
+import model.user.User;
 
 /**
  *
  * @author pc
  */
 @WebServlet(name = "deleteOrderById", urlPatterns = { "/product/deleteOrderById/*" })
-public class deleteOrderById extends HttpServlet {
+public class DeleteOrderById extends HttpServlet {
 
 	@Override
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)

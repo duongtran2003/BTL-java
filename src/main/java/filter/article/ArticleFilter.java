@@ -4,14 +4,9 @@
  */
 package filter.article;
 
-/**
- *
- * @author Hanh
- */
-import Model.Article.Article;
-import Model.User.User;
-import dal.articleDAO.ArticleDAO;
-import dal.UserDAO.UserDAO;
+import dal.articledao.ArticleDAO;
+import dal.userdao.UserDAO;
+
 import java.io.IOException;
 
 import jakarta.servlet.Filter;
@@ -21,6 +16,9 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.article.Article;
+import model.user.User;
+
 import java.io.BufferedReader;
 import org.json.JSONException;
 import org.json.JSONObject;

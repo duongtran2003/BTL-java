@@ -1,19 +1,21 @@
 package controllers.product;
 
-import Model.Product.HasVoucher;
-import Model.Product.Voucher;
-import Model.User.User;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.product.HasVoucher;
+import model.product.Voucher;
+import model.user.User;
+
 import com.google.gson.Gson;
 import static common.product.Constant.URL_HAS_VOUCHER_POST_AND_GET;
-import dal.ProductDAO.HasVoucherDAO;
-import dal.ProductDAO.VoucherDAO;
-import dal.UserDAO.UserDAO;
+
+import dal.productdao.HasVoucherDAO;
+import dal.productdao.VoucherDAO;
+import dal.userdao.UserDAO;
 import helper.JSONHelper;
 import jakarta.servlet.http.Cookie;
 import java.util.*;
